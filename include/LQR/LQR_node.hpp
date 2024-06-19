@@ -28,10 +28,10 @@ class LQRNode : public rclcpp::Node
 
         TrajectoryPoint TPOdometry; //odometry in a trajectoryPoint format
         FrenetPoint frenetOdometry; //our odometry in the frenet space
-        double linear_speed_;
-        geometry_msgs::msg::Vector3 angular_velocity_;
+        geometry_msgs::msg::Vector3 angularVelocity;
+        geometry_msgs::msg::Vector3 linearVelocity;
+        double linearSpeed;
         double yaw_;
-    
 }
 
 #endif
