@@ -16,15 +16,18 @@ class LQRNode : public rclcpp::Node
         void initialization();
         void loadParameters();
         void odometryCallback(nav_msgs::msg::Odometry::SharedPtr odometry); 
+        void trajectoryCallback(visualization_msgs::msg::MarkerArray::SharedPtr trajectory)
         void cart2frenet();
 
     private:
 
         rclcpp::Publisher</*to be defined*/>::SharedPtr  controlsPub;
         rclcpp::Subscription<nav_msgs::msg::Odometry>::SharedPtr odometrySub;
+        rclcpp::Subscription<visualization_msgs::msg::MarkerArray>::SharedPtr bordersCompletedPub;
 
-        std::string param_topicOdometry; //topic we subscribe to, to get the odometry
         std::string param_topicControls;
+        std::string param_topicOdometry; //topic we subscribe to, to get the odometry
+        std::string param_topicCenterlineCompleted; //topic we subscribe to, to get the odometry
 
         TrajectoryPoint TPOdometry; //odometry in a trajectoryPoint format
         FrenetPoint frenetOdometry; //our odometry in the frenet space
