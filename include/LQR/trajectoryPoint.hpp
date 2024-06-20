@@ -5,7 +5,7 @@
 
 struct EIGEN_ALIGN16 TrajectoryPoint
 {
-  double s_m; //distance ran along the reference
+  //double s_m; //distance ran along the reference #we don't need at the moment
   double x_m; //x position
   double y_m; //y position
   double psi_rad; //yaw in radiants
@@ -18,7 +18,7 @@ struct EIGEN_ALIGN16 TrajectoryPoint
 
 POINT_CLOUD_REGISTER_POINT_STRUCT(TrajectoryPoint,
 
-  (double, s_m, s_m)
+  //(double, s_m, s_m)
   (double, x_m, x_m)
   (double, y_m, y_m)
   (double, psi_rad, psi_rad)

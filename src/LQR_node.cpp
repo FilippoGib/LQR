@@ -49,96 +49,33 @@ void LQRNode::odometryCallback(nav_msgs::msg::Odometry::SharedPtr odometry)
 
 	this->odometry.x_m = odometry->pose.pose.position.x;
 	this->odometry.y_m = odometry->pose.pose.position.y;
-	this->odometry.s_m = 0; //we don't need it apparently
 	this->odometry.psi_rad = this->yaw;
 
-	cart2frenet(); //TODO: implementation
+	FrenetPoint frenetOdometry; //our goal
+
+	if(/*frenetSpace è inizializzato*/)
+	{
+		this->frenetSpace.getFrenetPoint(this->odometry, &frenetOdometry); 
+	}
+
+	//TODO: matmul per ottenere l'output
 }
 
 void LQRNode::trajectoryCallback(mmr_base::msg::SpeedProfilePoints::SharedPtr trajectory)
 {
      pcl::PointCloud<TrajectoryPoint>::Ptr cloud(new pcl::PointCloud<TrajectoryPoint>);
 
-    for (const auto &point : points) {
+    for (const auto &point : trajectory) {
+		TrajectoryPoint p;
+		p.x_m = point->point.x;
+		p.y_m = point->point.y;
+		p.psi_rad = point->ackerman_point.steering_angle;
+
         cloud->points.push_back(point);
     }
     cloud->width = cloud->points.size();
     cloud->height = 1;
-    initTree(cloud);
+    this->frenetSpace(cloud);
 	
 }
 
-//codice di jack 
-void FrenetSpace::initTree(const pcl::PointCloud<TrajectoryPoint>::Ptr& cloud) {
-    kdtree.setInputCloud(cloud);
-    std::cout << "INFO: Frenet Space initialized\n";
-}
-
-void FrenetSpace::initTree(const std::vector<TrajectoryPoint>& points) {
-    pcl::PointCloud<TrajectoryPoint>::Ptr cloud(new pcl::PointCloud<TrajectoryPoint>);
-
-    for (const auto &point : points) {
-        cloud->points.push_back(point);
-    }
-    cloud->width = cloud->points.size();
-    cloud->height = 1;
-    initTree(cloud);
-}
-
-FrenetSpace::FrenetSpace(const pcl::PointCloud<TrajectoryPoint>::Ptr& cloud) {
-    initTree(cloud);
-}
-
-FrenetSpace::FrenetSpace(const std::vector<TrajectoryPoint>& points) {
-    initTree(points);
-}
-
-int FrenetSpace::nearestNeighbour(const TrajectoryPoint& searchPoint,
-                                  std::vector<TrajectoryPoint>& returnPoints,
-                                  std::vector<float>& returnDistances,
-                                  int K,
-                                  bool verbose) {
-
-    std::vector<int> pointIdxKNNSearch(K);
-
-    returnDistances.resize(K);
-
-    const auto cloud = kdtree.getInputCloud();
-
-    if (verbose) {
-        std::cout << "INFO: K nearest neighbor search with K=" << K << " in a tree with size=" << cloud->size() << std::endl;
-    }
-
-    int number = kdtree.nearestKSearch(searchPoint, K, pointIdxKNNSearch, returnDistances);
-    for (int i = 0; i < number; ++i) {
-        if (verbose) {
-            std::cout << "INFO: Output KNN search (" << i << "): " << (*cloud)[pointIdxKNNSearch[i]].x_m
-                      << " " << (*cloud)[pointIdxKNNSearch[i]].y_m
-                      << " (squared distance: " << returnDistances[i] << ")" << std::endl;
-        }
-        returnPoints.push_back((*cloud)[pointIdxKNNSearch[i]]);
-    }
-    return number;
-}
-
-int FrenetSpace::getFrenetPoint(const TrajectoryPoint odometryPoint, FrenetPoint& frenetPoint) {
-
-    std::vector<TrajectoryPoint> pn;
-    std::vector<float> pn_d;
-
-    int n = nearestNeighbour(odometryPoint, pn, pn_d, 1, false);
-
-    if (n > 0) {
-
-
-        frenetPoint.s = pn[0].s_m;  // Assuming frenetPoint.s is computed this way
-        frenetPoint.d = pn_d[0];
-        frenetPoint.yaw_dev = ;
-        frenetPoint.d_prime = 0;
-        frenetPoint.yaw_dev_prime = 0;
-    }
-    return n;
-}
-
-// Explicitly instantiate the template
-template class pcl::KdTreeFLANN<TrajectoryPoint>;
