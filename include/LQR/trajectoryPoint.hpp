@@ -8,7 +8,7 @@ struct EIGEN_ALIGN16 TrajectoryPoint
   double s_m; //distance ran along the reference
   double x_m; //x position
   double y_m; //y position
-  double psi_rad; //yaw
+  double psi_rad; //yaw in radiants
   //double kappa_radpm; #we don't need it at the moment
   //double vx_mps; #we don't need it at the moment
   //double ax_mps2; #we don't need it at the moment

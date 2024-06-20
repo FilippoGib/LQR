@@ -16,25 +16,27 @@ class LQRNode : public rclcpp::Node
         void initialization();
         void loadParameters();
         void odometryCallback(nav_msgs::msg::Odometry::SharedPtr odometry); 
-        void trajectoryCallback(visualization_msgs::msg::MarkerArray::SharedPtr trajectory)
+        void trajectoryCallback(/*speedProfilePoints*/::SharedPtr trajectory)
         void cart2frenet();
 
     private:
 
         rclcpp::Publisher</*to be defined*/>::SharedPtr  controlsPub;
         rclcpp::Subscription<nav_msgs::msg::Odometry>::SharedPtr odometrySub;
-        rclcpp::Subscription<visualization_msgs::msg::MarkerArray>::SharedPtr bordersCompletedPub;
+        rclcpp::Subscription</*speedProfilePoints*/>::SharedPtr TrajectorySub;
 
         std::string param_topicControls;
         std::string param_topicOdometry; //topic we subscribe to, to get the odometry
-        std::string param_topicCenterlineCompleted; //topic we subscribe to, to get the odometry
+        std::string param_topicTrajectory; //topic we subscribe to, to get the odometry
 
-        TrajectoryPoint TPOdometry; //odometry in a trajectoryPoint format
-        FrenetPoint frenetOdometry; //our odometry in the frenet space
+        TrajectoryPoint TPOdometry; //odometry in a trajectoryPoint format so that the kd-tree works with homogeneous points
+        FrenetPoint frenetOdometry; //our odometry in the frenet space -> out goal
+        FrenetSpace
         geometry_msgs::msg::Vector3 angularVelocity;
         geometry_msgs::msg::Vector3 linearVelocity;
+        std::vector<TrajectoryPoint> centerlineCompleted;
         double linearSpeed;
-        double yaw_;
+        double yaw;
 }
 
 #endif

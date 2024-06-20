@@ -13,8 +13,8 @@ public:
     double s;              // distance covered so far
     double d;              // lateral deviation from the trajectory
     double yaw_dev;        // angular deviation i.e. difference between odometry_yaw and the tangent to the reference
-    double d_prime;        // first degree derivative of d
-    double yaw_dev_prime;  // first derivative of yaw_dev   
+    double d_prime;        // first degree derivative of d -> velocity of lateral deviation
+    double yaw_dev_prime;  // first derivative of yaw_dev -> velocity of angular deviation, we find it in the odometry
 
     /// @brief operator<< overloading because reasons (it's cool af)
     friend std::ostream& operator<<(std::ostream& os, const FrenetPoint& p) {
