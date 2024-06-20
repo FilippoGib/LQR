@@ -1,4 +1,5 @@
 #include "LQR/frenetSpace.hpp"
+#include <cmath>
 
 void FrenetSpace::initTree(const pcl::PointCloud<TrajectoryPoint>::Ptr& cloud) {
     kdtree.setInputCloud(cloud);
@@ -52,7 +53,7 @@ int FrenetSpace::nearestNeighbour(const TrajectoryPoint& searchPoint,
     return number;
 }
 
-int FrenetSpace::getFrenetPoint(const TrajectoryPoint odometryPoint, FrenetPoint& frenetPoint) {
+int FrenetSpace::getFrenetPoint(const TrajectoryPoint odometryPoint, FrenetPoint& frenetPoint, double odometryYaw, geometry_msgs::msg::Vector3 linearVelocity, double yawAngularVelocity) {
 
     std::vector<TrajectoryPoint> pn;
     std::vector<float> pn_d;
@@ -62,14 +63,45 @@ int FrenetSpace::getFrenetPoint(const TrajectoryPoint odometryPoint, FrenetPoint
     if (n > 0) {
 
 
-        frenetPoint.s = pn[0].s_m;  // Assuming frenetPoint.s is computed this way
+        //frenetPoint.s = pn[0].s_m;  // Assuming frenetPoint.s is computed this way, apparently we don't need it at this point
         frenetPoint.d = pn_d[0];
-        frenetPoint.yaw_dev = ;
-        frenetPoint.d_prime = 0;
-        frenetPoint.yaw_dev_prime = 0;
+        frenetPoint.yaw_dev = (pn_d[0].psi_rad - odometryYaw) % M_1_PI; //deviazione angolare normalizzata a +- PI greco
+        frenetPoint.d_prime = findNormalComponent(linearVelocity, pn_d[0].psi_rad);
+        frenetPoint.yaw_dev_prime = yawAngularVelocity;
     }
     return n;
 }
+
+geometry_msgs::msg::Vector3 findPerpendicularUnitVector(double heading) {
+    geometry_msgs::msg::Vector3 perpendicularVersor;
+    perpendicularVersor.x = -sin(heading);
+    perpendicularVersor.y = cos(heading);
+    perpendicularVersor.z = 0.0; // Assuming heading is in the XY plane
+
+    // Normalize the vector to make it a unit vector
+    double magnitude = std::sqrt(perpendicularVersor.x * perpendicularVersor.x +
+                                 perpendicularVersor.y * perpendicularVersor.y +
+                                 perpendicularVersor.z * perpendicularVersor.z);
+    
+    perpendicularVersor.x /= magnitude;
+    perpendicularVersor.y /= magnitude;
+    perpendicularVersor.z /= magnitude;
+    
+    return perpendicularVersor;
+}
+
+double findNormalComponent(const geometry_msgs::msg::Vector3 linearVelocity, double heading) {
+    // Find the perpendicular unit vector to the heading direction
+    geometry_msgs::msg::Vector3 perpendicularUnitVector = findPerpendicularUnitVector(heading);
+
+    // Compute the dot product of linear velocity and the perpendicular unit vector
+    double normalComponent = linearVelocity.x * perpendicularUnitVector.x +
+                             linearVelocity.y * perpendicularUnitVector.y +
+                             linearVelocity.z * perpendicularUnitVector.z;
+
+    return normalComponent;
+}
+
 
 // Explicitly instantiate the template
 template class pcl::KdTreeFLANN<TrajectoryPoint>;
