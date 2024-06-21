@@ -1,0 +1,10 @@
+/home/filippo/FormulaControlliLocale/lqr/build/CMakeFiles/install/strip.dir
+/home/filippo/FormulaControlliLocale/lqr/build/CMakeFiles/install/local.dir
+/home/filippo/FormulaControlliLocale/lqr/build/CMakeFiles/install.dir
+/home/filippo/FormulaControlliLocale/lqr/build/CMakeFiles/list_install_components.dir
+/home/filippo/FormulaControlliLocale/lqr/build/CMakeFiles/rebuild_cache.dir
+/home/filippo/FormulaControlliLocale/lqr/build/CMakeFiles/edit_cache.dir
+/home/filippo/FormulaControlliLocale/lqr/build/CMakeFiles/test.dir
+/home/filippo/FormulaControlliLocale/lqr/build/CMakeFiles/lqr_node.dir
+/home/filippo/FormulaControlliLocale/lqr/build/CMakeFiles/lqr_uninstall.dir
+/home/filippo/FormulaControlliLocale/lqr/build/CMakeFiles/uninstall.dir

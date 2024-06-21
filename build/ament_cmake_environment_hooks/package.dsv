@@ -1,0 +1,4 @@
+source;share/lqr/local_setup.bash
+source;share/lqr/local_setup.dsv
+source;share/lqr/local_setup.sh
+source;share/lqr/local_setup.zsh

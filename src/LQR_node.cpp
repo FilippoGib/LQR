@@ -1,4 +1,4 @@
-#include "LQR/LQR_node.hpp"
+#include "lqr/LQR_node.hpp"
 
 LQRNode::LQRNode() : Node("LQR")
 {
@@ -39,7 +39,7 @@ void LQRNode::odometryCallback(nav_msgs::msg::Odometry::SharedPtr odometry)
 									this->linearVelocity.z * this->linearVelocity.z);
 
 	// Extract angular velocity
-	this->angularVelocity = odometry->twist.twist.angular;
+	this->yawAngularVelocity = odometry->twist.twist.angular.z;
 
 	// Extract heading (yaw angle)
 	tf2::Quaternion quat;
@@ -47,15 +47,15 @@ void LQRNode::odometryCallback(nav_msgs::msg::Odometry::SharedPtr odometry)
 	double roll, pitch;
 	tf2::Matrix3x3(quat).getRPY(roll, pitch, this->yaw);
 
-	this->odometry.x_m = odometry->pose.pose.position.x;
-	this->odometry.y_m = odometry->pose.pose.position.y;
-	this->odometry.psi_rad = this->yaw;
+	this->odometryPoint.x_m = odometry->pose.pose.position.x;
+	this->odometryPoint.y_m = odometry->pose.pose.position.y;
+	this->odometryPoint.psi_rad = this->yaw;
 
 	FrenetPoint frenetOdometry; //our goal
 
 	if(/*frenetSpace è inizializzato*/)
 	{
-		this->frenetSpace.getFrenetPoint(this->odometry, &frenetOdometry); 
+		this->frenetSpace.getFrenetPoint(this->odometry, &frenetOdometry, this->yaw, this->linearVelocity,this->yawAngularVelocity); 
 	}
 
 	//TODO: matmul per ottenere l'output
@@ -76,6 +76,7 @@ void LQRNode::trajectoryCallback(mmr_base::msg::SpeedProfilePoints::SharedPtr tr
     cloud->width = cloud->points.size();
     cloud->height = 1;
     this->frenetSpace(cloud);
+	this->frenetSpaceIsInitializes = true;
 	
 }
 

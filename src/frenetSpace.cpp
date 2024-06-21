@@ -1,4 +1,5 @@
-#include "LQR/frenetSpace.hpp"
+#include "lqr/frenetSpace.hpp"
+#include "geometry_msgs/msg/vector3.hpp"
 #include <cmath>
 
 void FrenetSpace::initTree(const pcl::PointCloud<TrajectoryPoint>::Ptr& cloud) {
@@ -65,8 +66,8 @@ int FrenetSpace::getFrenetPoint(const TrajectoryPoint odometryPoint, FrenetPoint
 
         //frenetPoint.s = pn[0].s_m;  // Assuming frenetPoint.s is computed this way, apparently we don't need it at this point
         frenetPoint.d = pn_d[0];
-        frenetPoint.yaw_dev = (pn_d[0].psi_rad - odometryYaw) % M_1_PI; //deviazione angolare normalizzata a +- PI greco
-        frenetPoint.d_prime = findNormalComponent(linearVelocity, pn_d[0].psi_rad);
+        frenetPoint.yaw_dev = (pn[0].psi_rad - odometryYaw) % M_1_PI; //deviazione angolare normalizzata a +- PI greco
+        frenetPoint.d_prime = findNormalComponent(linearVelocity, pn[0].psi_rad);
         frenetPoint.yaw_dev_prime = yawAngularVelocity;
     }
     return n;
