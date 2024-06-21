@@ -20,7 +20,7 @@ class LQRNode : public rclcpp::Node
 
     private:
 
-        rclcpp::Publisher<mmr_base::msg::SpeedProfilePoints>::SharedPtr  controlsPub;
+        rclcpp::Publisher</*to be defined*/>::SharedPtr controlsPub;
         rclcpp::Subscription<nav_msgs::msg::Odometry>::SharedPtr odometrySub;
         rclcpp::Subscription<mmr_base::msg::SpeedProfilePoints>::SharedPtr TrajectorySub;
 
@@ -28,10 +28,10 @@ class LQRNode : public rclcpp::Node
         std::string param_topicOdometry; //topic we subscribe to, to get the odometry
         std::string param_topicTrajectory; //topic we subscribe to, to get the odometry
 
-        TrajectoryPoint TPOdometry; //odometry in a trajectoryPoint format so that the kd-tree works with homogeneous points
+        TrajectoryPoint odometryPoint; //odometry in a trajectoryPoint format so that the kd-tree works with homogeneous points
         FrenetSpace frenetSpace;
         geometry_msgs::msg::Vector3 linearVelocity;
-        double yawVelocity;
+        double yawAngularVelocity;
         double linearSpeed;
         double yaw;
         bool frenetSpaceIsInitialized = false;
