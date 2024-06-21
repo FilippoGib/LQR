@@ -1,4 +1,4 @@
-# Install script for directory: /home/filippo/FormulaControlliLocale/lqr
+# Install script for directory: /home/filippo/FormulaControlliLocale/LQR_LOCALE/src/lqr
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -44,7 +44,7 @@ if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_
          FILE "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/lib/lqr/lqr_node"
          RPATH "")
   endif()
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/lqr" TYPE EXECUTABLE FILES "/home/filippo/FormulaControlliLocale/lqr/build/lqr_node")
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/lqr" TYPE EXECUTABLE FILES "/home/filippo/FormulaControlliLocale/LQR_LOCALE/src/lqr/build/lqr_node")
   if(EXISTS "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/lib/lqr/lqr_node" AND
      NOT IS_SYMLINK "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/lib/lqr/lqr_node")
     file(RPATH_CHANGE
@@ -58,15 +58,15 @@ if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_
 endif()
 
 if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/include/lqr" TYPE DIRECTORY FILES "/home/filippo/FormulaControlliLocale/lqr/include/")
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/include/lqr" TYPE DIRECTORY FILES "/home/filippo/FormulaControlliLocale/LQR_LOCALE/src/lqr/include/")
 endif()
 
 if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/ament_index/resource_index/package_run_dependencies" TYPE FILE FILES "/home/filippo/FormulaControlliLocale/lqr/build/ament_cmake_index/share/ament_index/resource_index/package_run_dependencies/lqr")
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/ament_index/resource_index/package_run_dependencies" TYPE FILE FILES "/home/filippo/FormulaControlliLocale/LQR_LOCALE/src/lqr/build/ament_cmake_index/share/ament_index/resource_index/package_run_dependencies/lqr")
 endif()
 
 if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/ament_index/resource_index/parent_prefix_path" TYPE FILE FILES "/home/filippo/FormulaControlliLocale/lqr/build/ament_cmake_index/share/ament_index/resource_index/parent_prefix_path/lqr")
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/ament_index/resource_index/parent_prefix_path" TYPE FILE FILES "/home/filippo/FormulaControlliLocale/LQR_LOCALE/src/lqr/build/ament_cmake_index/share/ament_index/resource_index/parent_prefix_path/lqr")
 endif()
 
 if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
@@ -74,7 +74,7 @@ if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_
 endif()
 
 if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/lqr/environment" TYPE FILE FILES "/home/filippo/FormulaControlliLocale/lqr/build/ament_cmake_environment_hooks/ament_prefix_path.dsv")
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/lqr/environment" TYPE FILE FILES "/home/filippo/FormulaControlliLocale/LQR_LOCALE/src/lqr/build/ament_cmake_environment_hooks/ament_prefix_path.dsv")
 endif()
 
 if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
@@ -82,42 +82,42 @@ if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_
 endif()
 
 if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/lqr/environment" TYPE FILE FILES "/home/filippo/FormulaControlliLocale/lqr/build/ament_cmake_environment_hooks/path.dsv")
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/lqr/environment" TYPE FILE FILES "/home/filippo/FormulaControlliLocale/LQR_LOCALE/src/lqr/build/ament_cmake_environment_hooks/path.dsv")
 endif()
 
 if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/lqr" TYPE FILE FILES "/home/filippo/FormulaControlliLocale/lqr/build/ament_cmake_environment_hooks/local_setup.bash")
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/lqr" TYPE FILE FILES "/home/filippo/FormulaControlliLocale/LQR_LOCALE/src/lqr/build/ament_cmake_environment_hooks/local_setup.bash")
 endif()
 
 if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/lqr" TYPE FILE FILES "/home/filippo/FormulaControlliLocale/lqr/build/ament_cmake_environment_hooks/local_setup.sh")
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/lqr" TYPE FILE FILES "/home/filippo/FormulaControlliLocale/LQR_LOCALE/src/lqr/build/ament_cmake_environment_hooks/local_setup.sh")
 endif()
 
 if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/lqr" TYPE FILE FILES "/home/filippo/FormulaControlliLocale/lqr/build/ament_cmake_environment_hooks/local_setup.zsh")
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/lqr" TYPE FILE FILES "/home/filippo/FormulaControlliLocale/LQR_LOCALE/src/lqr/build/ament_cmake_environment_hooks/local_setup.zsh")
 endif()
 
 if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/lqr" TYPE FILE FILES "/home/filippo/FormulaControlliLocale/lqr/build/ament_cmake_environment_hooks/local_setup.dsv")
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/lqr" TYPE FILE FILES "/home/filippo/FormulaControlliLocale/LQR_LOCALE/src/lqr/build/ament_cmake_environment_hooks/local_setup.dsv")
 endif()
 
 if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/lqr" TYPE FILE FILES "/home/filippo/FormulaControlliLocale/lqr/build/ament_cmake_environment_hooks/package.dsv")
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/lqr" TYPE FILE FILES "/home/filippo/FormulaControlliLocale/LQR_LOCALE/src/lqr/build/ament_cmake_environment_hooks/package.dsv")
 endif()
 
 if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/ament_index/resource_index/packages" TYPE FILE FILES "/home/filippo/FormulaControlliLocale/lqr/build/ament_cmake_index/share/ament_index/resource_index/packages/lqr")
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/ament_index/resource_index/packages" TYPE FILE FILES "/home/filippo/FormulaControlliLocale/LQR_LOCALE/src/lqr/build/ament_cmake_index/share/ament_index/resource_index/packages/lqr")
 endif()
 
 if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
   file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/lqr/cmake" TYPE FILE FILES
-    "/home/filippo/FormulaControlliLocale/lqr/build/ament_cmake_core/lqrConfig.cmake"
-    "/home/filippo/FormulaControlliLocale/lqr/build/ament_cmake_core/lqrConfig-version.cmake"
+    "/home/filippo/FormulaControlliLocale/LQR_LOCALE/src/lqr/build/ament_cmake_core/lqrConfig.cmake"
+    "/home/filippo/FormulaControlliLocale/LQR_LOCALE/src/lqr/build/ament_cmake_core/lqrConfig-version.cmake"
     )
 endif()
 
 if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/lqr" TYPE FILE FILES "/home/filippo/FormulaControlliLocale/lqr/package.xml")
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/lqr" TYPE FILE FILES "/home/filippo/FormulaControlliLocale/LQR_LOCALE/src/lqr/package.xml")
 endif()
 
 if(CMAKE_INSTALL_COMPONENT)
@@ -128,5 +128,5 @@ endif()
 
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
-file(WRITE "/home/filippo/FormulaControlliLocale/lqr/build/${CMAKE_INSTALL_MANIFEST}"
+file(WRITE "/home/filippo/FormulaControlliLocale/LQR_LOCALE/src/lqr/build/${CMAKE_INSTALL_MANIFEST}"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")

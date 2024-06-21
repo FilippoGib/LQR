@@ -71,7 +71,7 @@
 				}
 			],
 			"type" : "PATH",
-			"value" : "/home/filippo/FormulaControlliLocale/lqr/build/test_results"
+			"value" : "/home/filippo/FormulaControlliLocale/LQR_LOCALE/src/lqr/build/test_results"
 		},
 		{
 			"name" : "BUILD_TESTING",
@@ -227,7 +227,7 @@
 				}
 			],
 			"type" : "INTERNAL",
-			"value" : "/home/filippo/FormulaControlliLocale/lqr/build"
+			"value" : "/home/filippo/FormulaControlliLocale/LQR_LOCALE/src/lqr/build"
 		},
 		{
 			"name" : "CMAKE_CACHE_MAJOR_VERSION",
@@ -815,7 +815,7 @@
 				}
 			],
 			"type" : "INTERNAL",
-			"value" : "/home/filippo/FormulaControlliLocale/lqr"
+			"value" : "/home/filippo/FormulaControlliLocale/LQR_LOCALE/src/lqr"
 		},
 		{
 			"name" : "CMAKE_INSTALL_PREFIX",
@@ -6707,7 +6707,7 @@
 				}
 			],
 			"type" : "STATIC",
-			"value" : "/home/filippo/FormulaControlliLocale/lqr/build"
+			"value" : "/home/filippo/FormulaControlliLocale/LQR_LOCALE/src/lqr/build"
 		},
 		{
 			"name" : "lqr_SOURCE_DIR",
@@ -6719,7 +6719,7 @@
 				}
 			],
 			"type" : "STATIC",
-			"value" : "/home/filippo/FormulaControlliLocale/lqr"
+			"value" : "/home/filippo/FormulaControlliLocale/LQR_LOCALE/src/lqr"
 		},
 		{
 			"name" : "pkgcfg_lib_PC_FLANN_flann",

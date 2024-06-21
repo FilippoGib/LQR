@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Site BuildName="(empty)"
-	BuildStamp="20240621-1311-Experimental"
+	BuildStamp="20240621-1542-Experimental"
 	Name="filippo-HP-Pavilion-Laptop-14-ce0xxx"
 	Generator="ctest-3.16.3"
 	CompilerName="/usr/bin/c++"
@@ -21,14 +21,14 @@
 	TotalVirtualMemory="2047"
 	TotalPhysicalMemory="7817"
 	LogicalProcessorsPerPhysical="2"
-	ProcessorClockFrequency="1800"
+	ProcessorClockFrequency="1799.8"
 	>
 	<Testing>
-		<StartDateTime>Jun 21 15:23 CEST</StartDateTime>
-		<StartTestTime>1718976202</StartTestTime>
+		<StartDateTime>Jun 21 17:42 CEST</StartDateTime>
+		<StartTestTime>1718984548</StartTestTime>
 		<TestList/>
-		<EndDateTime>Jun 21 15:23 CEST</EndDateTime>
-		<EndTestTime>1718976202</EndTestTime>
+		<EndDateTime>Jun 21 17:42 CEST</EndDateTime>
+		<EndTestTime>1718984548</EndTestTime>
 		<ElapsedMinutes>0</ElapsedMinutes>
 	</Testing>
 </Site>

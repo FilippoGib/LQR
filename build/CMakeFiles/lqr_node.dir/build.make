@@ -43,10 +43,10 @@ RM = /usr/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/filippo/FormulaControlliLocale/lqr
+CMAKE_SOURCE_DIR = /home/filippo/FormulaControlliLocale/LQR_LOCALE/src/lqr
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/filippo/FormulaControlliLocale/lqr/build
+CMAKE_BINARY_DIR = /home/filippo/FormulaControlliLocale/LQR_LOCALE/src/lqr/build
 
 # Include any dependencies generated for this target.
 include CMakeFiles/lqr_node.dir/depend.make
@@ -59,29 +59,29 @@ include CMakeFiles/lqr_node.dir/flags.make
 
 CMakeFiles/lqr_node.dir/src/LQR_node.cpp.o: CMakeFiles/lqr_node.dir/flags.make
 CMakeFiles/lqr_node.dir/src/LQR_node.cpp.o: ../src/LQR_node.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/filippo/FormulaControlliLocale/lqr/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/lqr_node.dir/src/LQR_node.cpp.o"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/lqr_node.dir/src/LQR_node.cpp.o -c /home/filippo/FormulaControlliLocale/lqr/src/LQR_node.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/filippo/FormulaControlliLocale/LQR_LOCALE/src/lqr/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/lqr_node.dir/src/LQR_node.cpp.o"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/lqr_node.dir/src/LQR_node.cpp.o -c /home/filippo/FormulaControlliLocale/LQR_LOCALE/src/lqr/src/LQR_node.cpp
 
 CMakeFiles/lqr_node.dir/src/LQR_node.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/lqr_node.dir/src/LQR_node.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/filippo/FormulaControlliLocale/lqr/src/LQR_node.cpp > CMakeFiles/lqr_node.dir/src/LQR_node.cpp.i
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/filippo/FormulaControlliLocale/LQR_LOCALE/src/lqr/src/LQR_node.cpp > CMakeFiles/lqr_node.dir/src/LQR_node.cpp.i
 
 CMakeFiles/lqr_node.dir/src/LQR_node.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/lqr_node.dir/src/LQR_node.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/filippo/FormulaControlliLocale/lqr/src/LQR_node.cpp -o CMakeFiles/lqr_node.dir/src/LQR_node.cpp.s
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/filippo/FormulaControlliLocale/LQR_LOCALE/src/lqr/src/LQR_node.cpp -o CMakeFiles/lqr_node.dir/src/LQR_node.cpp.s
 
 CMakeFiles/lqr_node.dir/src/frenetSpace.cpp.o: CMakeFiles/lqr_node.dir/flags.make
 CMakeFiles/lqr_node.dir/src/frenetSpace.cpp.o: ../src/frenetSpace.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/filippo/FormulaControlliLocale/lqr/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/lqr_node.dir/src/frenetSpace.cpp.o"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/lqr_node.dir/src/frenetSpace.cpp.o -c /home/filippo/FormulaControlliLocale/lqr/src/frenetSpace.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/filippo/FormulaControlliLocale/LQR_LOCALE/src/lqr/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/lqr_node.dir/src/frenetSpace.cpp.o"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/lqr_node.dir/src/frenetSpace.cpp.o -c /home/filippo/FormulaControlliLocale/LQR_LOCALE/src/lqr/src/frenetSpace.cpp
 
 CMakeFiles/lqr_node.dir/src/frenetSpace.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/lqr_node.dir/src/frenetSpace.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/filippo/FormulaControlliLocale/lqr/src/frenetSpace.cpp > CMakeFiles/lqr_node.dir/src/frenetSpace.cpp.i
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/filippo/FormulaControlliLocale/LQR_LOCALE/src/lqr/src/frenetSpace.cpp > CMakeFiles/lqr_node.dir/src/frenetSpace.cpp.i
 
 CMakeFiles/lqr_node.dir/src/frenetSpace.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/lqr_node.dir/src/frenetSpace.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/filippo/FormulaControlliLocale/lqr/src/frenetSpace.cpp -o CMakeFiles/lqr_node.dir/src/frenetSpace.cpp.s
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/filippo/FormulaControlliLocale/LQR_LOCALE/src/lqr/src/frenetSpace.cpp -o CMakeFiles/lqr_node.dir/src/frenetSpace.cpp.s
 
 # Object files for target lqr_node
 lqr_node_OBJECTS = \
@@ -256,7 +256,7 @@ lqr_node: /usr/lib/x86_64-linux-gnu/libboost_date_time.so.1.71.0
 lqr_node: /usr/lib/x86_64-linux-gnu/libboost_iostreams.so.1.71.0
 lqr_node: /usr/lib/x86_64-linux-gnu/libboost_serialization.so.1.71.0
 lqr_node: CMakeFiles/lqr_node.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/filippo/FormulaControlliLocale/lqr/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Linking CXX executable lqr_node"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/filippo/FormulaControlliLocale/LQR_LOCALE/src/lqr/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Linking CXX executable lqr_node"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/lqr_node.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.
@@ -269,6 +269,6 @@ CMakeFiles/lqr_node.dir/clean:
 .PHONY : CMakeFiles/lqr_node.dir/clean
 
 CMakeFiles/lqr_node.dir/depend:
-	cd /home/filippo/FormulaControlliLocale/lqr/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/filippo/FormulaControlliLocale/lqr /home/filippo/FormulaControlliLocale/lqr /home/filippo/FormulaControlliLocale/lqr/build /home/filippo/FormulaControlliLocale/lqr/build /home/filippo/FormulaControlliLocale/lqr/build/CMakeFiles/lqr_node.dir/DependInfo.cmake --color=$(COLOR)
+	cd /home/filippo/FormulaControlliLocale/LQR_LOCALE/src/lqr/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/filippo/FormulaControlliLocale/LQR_LOCALE/src/lqr /home/filippo/FormulaControlliLocale/LQR_LOCALE/src/lqr /home/filippo/FormulaControlliLocale/LQR_LOCALE/src/lqr/build /home/filippo/FormulaControlliLocale/LQR_LOCALE/src/lqr/build /home/filippo/FormulaControlliLocale/LQR_LOCALE/src/lqr/build/CMakeFiles/lqr_node.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : CMakeFiles/lqr_node.dir/depend
 

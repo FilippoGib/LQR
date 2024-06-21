@@ -22,7 +22,7 @@ class LQRNode : public rclcpp::Node
 
         rclcpp::Publisher</*to be defined*/>::SharedPtr controlsPub;
         rclcpp::Subscription<nav_msgs::msg::Odometry>::SharedPtr odometrySub;
-        rclcpp::Subscription<mmr_base::msg::SpeedProfilePoints>::SharedPtr TrajectorySub;
+        rclcpp::Subscription<mmr_base::msg::SpeedProfilePoints>::SharedPtr trajectorySub;
 
         std::string param_topicControls;
         std::string param_topicOdometry; //topic we subscribe to, to get the odometry
@@ -35,6 +35,6 @@ class LQRNode : public rclcpp::Node
         double linearSpeed;
         double yaw;
         bool frenetSpaceIsInitialized = false;
-}
+};
 
 #endif

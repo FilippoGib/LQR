@@ -43,10 +43,10 @@ RM = /usr/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/filippo/FormulaControlliLocale/lqr
+CMAKE_SOURCE_DIR = /home/filippo/FormulaControlliLocale/LQR_LOCALE/src/lqr
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/filippo/FormulaControlliLocale/lqr/build
+CMAKE_BINARY_DIR = /home/filippo/FormulaControlliLocale/LQR_LOCALE/src/lqr/build
 
 # Utility rule file for uninstall.
 
@@ -67,6 +67,6 @@ CMakeFiles/uninstall.dir/clean:
 .PHONY : CMakeFiles/uninstall.dir/clean
 
 CMakeFiles/uninstall.dir/depend:
-	cd /home/filippo/FormulaControlliLocale/lqr/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/filippo/FormulaControlliLocale/lqr /home/filippo/FormulaControlliLocale/lqr /home/filippo/FormulaControlliLocale/lqr/build /home/filippo/FormulaControlliLocale/lqr/build /home/filippo/FormulaControlliLocale/lqr/build/CMakeFiles/uninstall.dir/DependInfo.cmake --color=$(COLOR)
+	cd /home/filippo/FormulaControlliLocale/LQR_LOCALE/src/lqr/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/filippo/FormulaControlliLocale/LQR_LOCALE/src/lqr /home/filippo/FormulaControlliLocale/LQR_LOCALE/src/lqr /home/filippo/FormulaControlliLocale/LQR_LOCALE/src/lqr/build /home/filippo/FormulaControlliLocale/LQR_LOCALE/src/lqr/build /home/filippo/FormulaControlliLocale/LQR_LOCALE/src/lqr/build/CMakeFiles/uninstall.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : CMakeFiles/uninstall.dir/depend
 

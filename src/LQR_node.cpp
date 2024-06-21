@@ -53,9 +53,9 @@ void LQRNode::odometryCallback(nav_msgs::msg::Odometry::SharedPtr odometry)
 
 	FrenetPoint frenetOdometry; //our goal
 
-	if(/*frenetSpace è inizializzato*/)
+	if(this->frenetSpaceIsInitialized)
 	{
-		this->frenetSpace.getFrenetPoint(this->odometry, &frenetOdometry, this->yaw, this->linearVelocity,this->yawAngularVelocity); 
+		this->frenetSpace.getFrenetPoint(this->odometryPoint, &frenetOdometry, this->yaw, this->linearVelocity,this->yawAngularVelocity); 
 	}
 
 	//TODO: matmul per ottenere l'output

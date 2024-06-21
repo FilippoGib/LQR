@@ -63,6 +63,9 @@ public:
     /// @brief Get the frenet point corresponding to a query odometry point.
     /// @param odometryPoint the given query point
     /// @param frenetPoint (output) the resultant frenet point. 
+    /// @param odometryYaw heading of the car
+    /// @param linearVelocity velocity of the car represented as a vector
+    /// @param yawAngularVelocity angular velocity on the z axis (yaw') 
     /// @return 1 if found, 0 otherwise.
     int getFrenetPoint(const TrajectoryPoint odometryPoint, FrenetPoint& frenetPoint, double odometryYaw, geometry_msgs::msg::Vector3 linearVelocity, double yawAngularVelocity);
 };

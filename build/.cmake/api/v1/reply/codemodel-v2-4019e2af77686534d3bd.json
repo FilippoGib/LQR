@@ -43,7 +43,7 @@
 				{
 					"directoryIndex" : 0,
 					"id" : "lqr_node::@6890427a1f51a3e7e1df",
-					"jsonFile" : "target-lqr_node-Debug-dc62d96da33aa79a474a.json",
+					"jsonFile" : "target-lqr_node-Debug-ee234aeb9d21ff264e8f.json",
 					"name" : "lqr_node",
 					"projectIndex" : 0
 				},
@@ -67,8 +67,8 @@
 	"kind" : "codemodel",
 	"paths" : 
 	{
-		"build" : "/home/filippo/FormulaControlliLocale/lqr/build",
-		"source" : "/home/filippo/FormulaControlliLocale/lqr"
+		"build" : "/home/filippo/FormulaControlliLocale/LQR_LOCALE/src/lqr/build",
+		"source" : "/home/filippo/FormulaControlliLocale/LQR_LOCALE/src/lqr"
 	},
 	"version" : 
 	{
