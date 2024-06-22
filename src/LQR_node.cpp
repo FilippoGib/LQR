@@ -12,8 +12,8 @@ void LQRNode::loadParameters()
 	this->declare_parameter<std::string>("node/topicOdometry", "");
 	this->param_topicOdometry = this->get_parameter("node/topicOdometry").get_value<std::string>();
 
-	this->declare_parameter<std::string>("node/topicCenterlineCompleted", "");
-	this->param_topicCenterlineCompleted = this->get_parameter("node/topicCenterlineCompleted").get_value<std::string>();
+	this->declare_parameter<std::string>("node/topicTrajectory", "");
+	this->param_topicTrajectory = this->get_parameter("node/topicTrajectory").get_value<std::string>();
 
 	this->declare_parameter<std::string>("node/topicControls", "");
 	this->param_topicControls = this->get_parameter("node/topicControls").get_value<std::string>();
@@ -55,7 +55,7 @@ void LQRNode::odometryCallback(nav_msgs::msg::Odometry::SharedPtr odometry)
 
 	if(this->frenetSpaceIsInitialized)
 	{
-		this->frenetSpace.getFrenetPoint(this->odometryPoint, &frenetOdometry, this->yaw, this->linearVelocity,this->yawAngularVelocity); 
+		this->frenetSpace.getFrenetPoint(this->odometryPoint, frenetOdometry, this->yaw, this->linearVelocity,this->yawAngularVelocity); 
 	}
 
 	//TODO: matmul per ottenere l'output

@@ -6,11 +6,22 @@ if(NOT CMAKE_CXX_STANDARD)
   set(CMAKE_CXX_STANDARD 14)
 endif()
 
+
+if(CMAKE_COMPILER_IS_GNUCXX OR CMAKE_CXX_COMPILER_ID MATCHES "Clang")
+  add_compile_options(-Wall -Wextra -Wpedantic -O3)
+endif()
+
 # Find dependencies
 find_package(ament_cmake REQUIRED)
 find_package(rclcpp REQUIRED)
 find_package(std_msgs REQUIRED)
+find_package(mmr_base REQUIRED)
 find_package(geometry_msgs REQUIRED)
+find_package(mmr_common_functions REQUIRED)
+find_package(tf2_ros REQUIRED)
+find_package(tf2_kdl REQUIRED)
+find_package(tf2 REQUIRED)
+find_package(tf2_geometry_msgs REQUIRED)
 find_package(PCL 1.13 REQUIRED)
 
 # Include directories
@@ -26,6 +37,18 @@ add_executable(lqr_node src/LQR_node.cpp src/frenetSpace.cpp)
 ament_target_dependencies(lqr_node rclcpp std_msgs geometry_msgs)
 
 target_link_libraries(lqr_node ${PCL_LIBRARIES})
+
+ament_target_dependencies(${PROJECT_NAME}_node
+rclcpp
+std_msgs
+mmr_base
+mmr_common_functions
+geometry_msgs
+tf2_ros
+tf2
+tf2_geometry_msgs
+
+)
 
 install(TARGETS
   lqr_node

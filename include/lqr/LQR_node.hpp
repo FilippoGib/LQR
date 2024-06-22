@@ -7,7 +7,13 @@
 #include "nav_msgs/msg/odometry.hpp"
 #include "tf2/LinearMath/Quaternion.h"
 #include "tf2_geometry_msgs/tf2_geometry_msgs.h"
+#include <pcl/point_cloud.h>
+#include <pcl/kdtree/kdtree_flann.h>
+#include "geometry_msgs/msg/vector3.hpp"
+#include <mmr_base/msg/speed_profile_points.hpp>
 #include <cmath>
+
+using namespace std::chrono_literals;
 
 class LQRNode : public rclcpp::Node 
 {
@@ -20,7 +26,9 @@ class LQRNode : public rclcpp::Node
 
     private:
 
-        rclcpp::Publisher</*to be defined*/>::SharedPtr controlsPub;
+        rclcpp::TimerBase::SharedPtr timer;
+
+        rclcpp::Publisher<double>::SharedPtr controlsPub;
         rclcpp::Subscription<nav_msgs::msg::Odometry>::SharedPtr odometrySub;
         rclcpp::Subscription<mmr_base::msg::SpeedProfilePoints>::SharedPtr trajectorySub;
 

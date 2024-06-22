@@ -1,5 +1,4 @@
 #include "lqr/frenetSpace.hpp"
-#include "geometry_msgs/msg/vector3.hpp"
 #include <cmath>
 
 void FrenetSpace::initTree(const pcl::PointCloud<TrajectoryPoint>::Ptr& cloud) {
@@ -54,25 +53,6 @@ int FrenetSpace::nearestNeighbour(const TrajectoryPoint& searchPoint,
     return number;
 }
 
-int FrenetSpace::getFrenetPoint(const TrajectoryPoint odometryPoint, FrenetPoint& frenetPoint, double odometryYaw, geometry_msgs::msg::Vector3 linearVelocity, double yawAngularVelocity) {
-
-    std::vector<TrajectoryPoint> pn;
-    std::vector<float> pn_d;
-
-    int n = nearestNeighbour(odometryPoint, pn, pn_d, 1, false);
-
-    if (n > 0) {
-
-
-        //frenetPoint.s = pn[0].s_m;  // Assuming frenetPoint.s is computed this way, apparently we don't need it at this point
-        frenetPoint.d = pn_d[0];
-        frenetPoint.yaw_dev = (pn[0].psi_rad - odometryYaw) % M_1_PI; //deviazione angolare normalizzata a +- PI greco
-        frenetPoint.d_prime = findNormalComponent(linearVelocity, pn[0].psi_rad);
-        frenetPoint.yaw_dev_prime = yawAngularVelocity;
-    }
-    return n;
-}
-
 geometry_msgs::msg::Vector3 findPerpendicularUnitVector(double heading) {
     geometry_msgs::msg::Vector3 perpendicularVersor;
     perpendicularVersor.x = -sin(heading);
@@ -103,6 +83,35 @@ double findNormalComponent(const geometry_msgs::msg::Vector3 linearVelocity, dou
     return normalComponent;
 }
 
+double normalizeAngle(double angle) {
+    const double PI = 3.14159265358979323846;
+    angle = fmod(angle + PI, 2.0 * PI);
+    if (angle < 0) {
+        angle += 2.0 * PI;
+    }
+    return angle - PI;
+}
+
+int FrenetSpace::getFrenetPoint(const TrajectoryPoint odometryPoint, FrenetPoint& frenetPoint, double odometryYaw, geometry_msgs::msg::Vector3 linearVelocity, double yawAngularVelocity) {
+
+    std::vector<TrajectoryPoint> pn;
+    std::vector<float> pn_d;
+
+    int n = nearestNeighbour(odometryPoint, pn, pn_d, 1, false);
+
+    if (n > 0) {
+
+
+        //frenetPoint.s = pn[0].s_m;  // Assuming frenetPoint.s is computed this way, apparently we don't need it at this point
+        frenetPoint.d = pn_d[0];
+        double deviationAngle = pn[0].psi_rad - odometryYaw;
+        deviationAngle = normalizeAngle(deviationAngle);
+        frenetPoint.yaw_dev =  deviationAngle;
+        frenetPoint.d_prime = findNormalComponent(linearVelocity, pn[0].psi_rad);
+        frenetPoint.yaw_dev_prime = yawAngularVelocity;
+    }
+    return n;
+}
 
 // Explicitly instantiate the template
 template class pcl::KdTreeFLANN<TrajectoryPoint>;

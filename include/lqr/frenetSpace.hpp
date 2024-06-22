@@ -2,6 +2,8 @@
 
 #include <pcl/point_cloud.h>
 #include <pcl/kdtree/kdtree_flann.h>
+#include "geometry_msgs/msg/vector3.hpp"
+#include <mmr_base/msg/speed_profile_points.hpp>
 #include <iostream>
 #include <vector>
 #include <ctime>
