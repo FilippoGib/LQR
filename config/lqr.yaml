@@ -1,0 +1,6 @@
+lqr:
+  ros_parameters:
+    node/topicOdometry: 
+    node/topicTrajectory:
+    node/topicControls:
+

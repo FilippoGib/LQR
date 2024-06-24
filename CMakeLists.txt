@@ -34,7 +34,7 @@ add_definitions(${PCL_DEFINITIONS})
 
 # Add executable
 add_executable(lqr_node src/LQR_node.cpp src/frenetSpace.cpp)
-ament_target_dependencies(lqr_node rclcpp std_msgs geometry_msgs)
+ament_target_dependencies(lqr_node rclcpp std_msgs geometry_msgs mmr_base)
 
 target_link_libraries(lqr_node ${PCL_LIBRARIES})
 
