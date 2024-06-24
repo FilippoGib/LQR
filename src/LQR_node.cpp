@@ -23,7 +23,7 @@ void LQRNode::initialization()
 {
 	this->loadParameters();
 
-	this->controlsPub = this->create_publisher</*to be defined*/>(this->param_topicControls, 1);
+	// this->controlsPub = this->create_publisher<std_msgs::msg::Double>(this->param_topicControls, 1);
 	this->odometrySub = this->create_subscription<nav_msgs::msg::Odometry>(this->param_topicOdometry, 1, std::bind(&LQRNode::odometryCallback, this, std::placeholders::_1));
 	this->trajectorySub = this->create_subscription<mmr_base::msg::SpeedProfilePoints>(this->param_topicTrajectory, 1, std::bind(&LQRNode::trajectoryCallback, this, std::placeholders::_1));
 
@@ -76,7 +76,7 @@ void LQRNode::trajectoryCallback(mmr_base::msg::SpeedProfilePoints::SharedPtr tr
     cloud->width = cloud->points.size();
     cloud->height = 1;
     this->frenetSpace(cloud);
-	this->frenetSpaceIsInitializes = true;
+	this->frenetSpaceIsInitialized = true;
 	
 }
 

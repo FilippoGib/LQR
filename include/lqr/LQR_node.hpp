@@ -10,8 +10,8 @@
 #include <pcl/point_cloud.h>
 #include <pcl/kdtree/kdtree_flann.h>
 #include "geometry_msgs/msg/vector3.hpp"
-#include "mmr_base/msg/SpeedProfilePoints.hpp"
-#include "mmr_base/msg/SpeedProfilePoint.hpp"
+#include "mmr_base/msg/speed_profile_point.hpp"
+#include "mmr_base/msg/speed_profile_points.hpp"
 
 #include <cmath>
 
@@ -24,7 +24,7 @@ class LQRNode : public rclcpp::Node
         void initialization();
         void loadParameters();
         void odometryCallback(nav_msgs::msg::Odometry::SharedPtr odometry); 
-        void trajectoryCallback(mmr_base::msg::SpeedProfilePoints::SharedPtr trajectory)
+        void trajectoryCallback(mmr_base::msg::SpeedProfilePoints::SharedPtr trajectory);
 
     private:
 
