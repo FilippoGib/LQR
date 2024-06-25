@@ -23,7 +23,7 @@ void LQRNode::initialization()
 {
 	this->loadParameters();
 
-	// this->controlsPub = this->create_publisher<std_msgs::msg::Double>(this->param_topicControls, 1);
+	this->controlsPub = this->create_publisher<ackermann_msgs::msg::AckermannDrive>(this->param_topicControls, 1);
 	this->odometrySub = this->create_subscription<nav_msgs::msg::Odometry>(this->param_topicOdometry, 1, std::bind(&LQRNode::odometryCallback, this, std::placeholders::_1));
 	this->trajectorySub = this->create_subscription<mmr_base::msg::SpeedProfilePoints>(this->param_topicTrajectory, 1, std::bind(&LQRNode::trajectoryCallback, this, std::placeholders::_1));
 
@@ -65,18 +65,18 @@ void LQRNode::trajectoryCallback(mmr_base::msg::SpeedProfilePoints::SharedPtr tr
 {
      pcl::PointCloud<TrajectoryPoint>::Ptr cloud(new pcl::PointCloud<TrajectoryPoint>);
 
-    for (const auto &point : trajectory) {
+    for (const auto &point : trajectory->points) {
 		TrajectoryPoint p;
-		p.x_m = point->point.x;
-		p.y_m = point->point.y;
-		p.psi_rad = point->ackerman_point.steering_angle;
+		p.x_m = point.point.x;
+		p.y_m = point.point.y;
+		p.psi_rad = point.ackerman_point.steering_angle;
 
-        cloud->points.push_back(point);
+        cloud->points.push_back(p);
     }
     cloud->width = cloud->points.size();
     cloud->height = 1;
-    this->frenetSpace(cloud);
+    this->frenetSpace.Initialize(cloud);
 	this->frenetSpaceIsInitialized = true;
-	
+
 }
 

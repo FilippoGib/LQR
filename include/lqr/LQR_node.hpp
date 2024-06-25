@@ -12,7 +12,7 @@
 #include "geometry_msgs/msg/vector3.hpp"
 #include "mmr_base/msg/speed_profile_point.hpp"
 #include "mmr_base/msg/speed_profile_points.hpp"
-
+#include <ackermann_msgs/msg/ackermann_drive.hpp>
 #include <cmath>
 
 using namespace std::chrono_literals;
@@ -30,7 +30,7 @@ class LQRNode : public rclcpp::Node
 
         rclcpp::TimerBase::SharedPtr timer;
 
-        rclcpp::Publisher<double>::SharedPtr controlsPub;
+        rclcpp::Publisher<ackermann_msgs::msg::AckermannDrive>::SharedPtr controlsPub;
         rclcpp::Subscription<nav_msgs::msg::Odometry>::SharedPtr odometrySub;
         rclcpp::Subscription<mmr_base::msg::SpeedProfilePoints>::SharedPtr trajectorySub;
 

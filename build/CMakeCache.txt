@@ -529,6 +529,9 @@ VTK_DIR:PATH=/usr/lib/cmake/vtk-7.1
 //Path to a library.
 _lib:FILEPATH=/opt/ros/foxy/lib/libcomposition_interfaces__rosidl_typesupport_fastrtps_cpp.so
 
+//The directory containing a CMake configuration file for ackermann_msgs.
+ackermann_msgs_DIR:PATH=/opt/ros/foxy/share/ackermann_msgs/cmake
+
 //The directory containing a CMake configuration file for action_msgs.
 action_msgs_DIR:PATH=/opt/ros/foxy/share/action_msgs/cmake
 
@@ -653,10 +656,10 @@ lqr_SOURCE_DIR:STATIC=/home/filippo/FormulaControlliLocale/LQR_LOCALE/src/lqr
 message_filters_DIR:PATH=/opt/ros/foxy/share/message_filters/cmake
 
 //The directory containing a CMake configuration file for mmr_base.
-mmr_base_DIR:PATH=/home/filippo/Desktop/mmr-drive/install/mmr_base/share/mmr_base/cmake
+mmr_base_DIR:PATH=/home/filippo/mmr-drive/install/mmr_base/share/mmr_base/cmake
 
 //The directory containing a CMake configuration file for mmr_common_functions.
-mmr_common_functions_DIR:PATH=/home/filippo/Desktop/mmr-drive/install/mmr_common_functions/share/mmr_common_functions/cmake
+mmr_common_functions_DIR:PATH=/home/filippo/mmr-drive/install/mmr_common_functions/share/mmr_common_functions/cmake
 
 //The directory containing a CMake configuration file for orocos_kdl.
 orocos_kdl_DIR:PATH=/opt/ros/foxy/share/orocos_kdl/cmake
@@ -800,7 +803,7 @@ tf2_msgs_DIR:PATH=/opt/ros/foxy/share/tf2_msgs/cmake
 tf2_ros_DIR:PATH=/opt/ros/foxy/share/tf2_ros/cmake
 
 //The directory containing a CMake configuration file for tracetools.
-tracetools_DIR:PATH=/home/filippo/Desktop/mmr-drive/install/tracetools/share/tracetools/cmake
+tracetools_DIR:PATH=/home/filippo/mmr-drive/install/tracetools/share/tracetools/cmake
 
 //The directory containing a CMake configuration file for unique_identifier_msgs.
 unique_identifier_msgs_DIR:PATH=/opt/ros/foxy/share/unique_identifier_msgs/cmake

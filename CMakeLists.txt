@@ -18,6 +18,7 @@ find_package(std_msgs REQUIRED)
 find_package(mmr_base REQUIRED)
 find_package(geometry_msgs REQUIRED)
 find_package(mmr_common_functions REQUIRED)
+find_package(ackermann_msgs REQUIRED)
 find_package(tf2_ros REQUIRED)
 find_package(tf2_kdl REQUIRED)
 find_package(tf2 REQUIRED)
@@ -43,6 +44,7 @@ rclcpp
 std_msgs
 mmr_base
 mmr_common_functions
+ackermann_msgs
 geometry_msgs
 tf2_ros
 tf2

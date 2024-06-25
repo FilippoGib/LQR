@@ -6294,6 +6294,18 @@
 			"value" : "/opt/ros/foxy/lib/libcomposition_interfaces__rosidl_typesupport_fastrtps_cpp.so"
 		},
 		{
+			"name" : "ackermann_msgs_DIR",
+			"properties" : 
+			[
+				{
+					"name" : "HELPSTRING",
+					"value" : "The directory containing a CMake configuration file for ackermann_msgs."
+				}
+			],
+			"type" : "PATH",
+			"value" : "/opt/ros/foxy/share/ackermann_msgs/cmake"
+		},
+		{
 			"name" : "action_msgs_DIR",
 			"properties" : 
 			[
@@ -6839,7 +6851,7 @@
 				}
 			],
 			"type" : "PATH",
-			"value" : "/home/filippo/Desktop/mmr-drive/install/mmr_base/share/mmr_base/cmake"
+			"value" : "/home/filippo/mmr-drive/install/mmr_base/share/mmr_base/cmake"
 		},
 		{
 			"name" : "mmr_common_functions_DIR",
@@ -6851,7 +6863,7 @@
 				}
 			],
 			"type" : "PATH",
-			"value" : "/home/filippo/Desktop/mmr-drive/install/mmr_common_functions/share/mmr_common_functions/cmake"
+			"value" : "/home/filippo/mmr-drive/install/mmr_common_functions/share/mmr_common_functions/cmake"
 		},
 		{
 			"name" : "orocos_kdl_DIR",
@@ -7471,7 +7483,7 @@
 				}
 			],
 			"type" : "PATH",
-			"value" : "/home/filippo/Desktop/mmr-drive/install/tracetools/share/tracetools/cmake"
+			"value" : "/home/filippo/mmr-drive/install/tracetools/share/tracetools/cmake"
 		},
 		{
 			"name" : "unique_identifier_msgs_DIR",

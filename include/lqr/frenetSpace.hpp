@@ -3,8 +3,9 @@
 #include <pcl/point_cloud.h>
 #include <pcl/kdtree/kdtree_flann.h>
 #include "geometry_msgs/msg/vector3.hpp"
-#include "mmr_base/msg/speed_profile_point.h"
-#include "mmr_base/msg/speed_profile_points.h"
+#include "mmr_base/msg/speed_profile_point.hpp"
+#include "mmr_base/msg/speed_profile_points.hpp"
+#include <ackermann_msgs/msg/ackermann_drive.hpp>
 #include <iostream>
 #include <vector>
 #include <ctime>
@@ -42,13 +43,16 @@ private:
     void initTree(const std::vector<TrajectoryPoint>& points);
 
 public:
+    ///@brief dummy constructor to avoid building issues
+    FrenetSpace();
+
     /// @brief Constructor
     /// @param cloud An already created point cloud
-    FrenetSpace(const pcl::PointCloud<TrajectoryPoint>::Ptr& cloud);
+    void Initialize(const pcl::PointCloud<TrajectoryPoint>::Ptr& cloud);
 
     /// @brief Constructor
     /// @param cloud A vector of points
-    FrenetSpace(const std::vector<TrajectoryPoint>& points);
+    void Initialize(const std::vector<TrajectoryPoint>& points);
 
     /// @brief Search for k-nearest neighbors for the given query point.
     /// @param searchPoint the given query point
