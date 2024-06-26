@@ -2,6 +2,7 @@
 
 #include <pcl/point_types.h>
 #include <pcl/register_point_struct.h>
+#include <pcl/kdtree/kdtree_flann.h>
 
 struct EIGEN_ALIGN16 TrajectoryPoint
 {

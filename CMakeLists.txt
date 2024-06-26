@@ -6,7 +6,6 @@ if(NOT CMAKE_CXX_STANDARD)
   set(CMAKE_CXX_STANDARD 14)
 endif()
 
-
 if(CMAKE_COMPILER_IS_GNUCXX OR CMAKE_CXX_COMPILER_ID MATCHES "Clang")
   add_compile_options(-Wall -Wextra -Wpedantic -O3)
 endif()
@@ -35,28 +34,31 @@ add_definitions(${PCL_DEFINITIONS})
 
 # Add executable
 add_executable(lqr_node src/LQR_node.cpp src/frenetSpace.cpp)
-# ament_target_dependencies(lqr_node rclcpp std_msgs geometry_msgs mmr_base)
 
-target_link_libraries(lqr_node ${PCL_LIBRARIES})
-
-ament_target_dependencies(${PROJECT_NAME}_node
-rclcpp
-std_msgs
-mmr_base
-mmr_common_functions
-ackermann_msgs
-geometry_msgs
-tf2_ros
-tf2
-tf2_geometry_msgs
-
+# Link against PCL libraries and other dependencies
+target_link_libraries(lqr_node 
+  ${PCL_LIBRARIES}
 )
 
-install(TARGETS
-  lqr_node
-  DESTINATION lib/${PROJECT_NAME})
+ament_target_dependencies(lqr_node
+  rclcpp
+  std_msgs
+  mmr_base
+  mmr_common_functions
+  ackermann_msgs
+  geometry_msgs
+  tf2_ros
+  tf2_kdl
+  tf2
+  tf2_geometry_msgs
+  PCL
+)
 
-install(DIRECTORY include/
-  DESTINATION include/${PROJECT_NAME})
+# install(TARGETS
+#   lqr_node
+#   DESTINATION lib/${PROJECT_NAME})
+
+# install(DIRECTORY include/
+#   DESTINATION include/${PROJECT_NAME})
 
 ament_package()

@@ -116,6 +116,3 @@ int FrenetSpace::getFrenetPoint(const TrajectoryPoint odometryPoint, FrenetPoint
     }
     return n;
 }
-
-// Explicitly instantiate the template
-template class pcl::KdTreeFLANN<TrajectoryPoint>;

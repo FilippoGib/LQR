@@ -80,3 +80,14 @@ void LQRNode::trajectoryCallback(mmr_base::msg::SpeedProfilePoints::SharedPtr tr
 
 }
 
+int main(int argc, char **argv)
+{
+  rclcpp::init(argc, argv);
+
+  auto lqrNode = std::make_shared<LQRNode>();
+
+  rclcpp::spin(lqrNode);
+
+  return 0;
+}
+
