@@ -48,11 +48,11 @@ public:
 
     /// @brief Constructor
     /// @param cloud An already created point cloud
-    void Initialize(const pcl::PointCloud<TrajectoryPoint>::Ptr& cloud);
+    FrenetSpace(const pcl::PointCloud<TrajectoryPoint>::Ptr& cloud);
 
     /// @brief Constructor
     /// @param cloud A vector of points
-    void Initialize(const std::vector<TrajectoryPoint>& points);
+    FrenetSpace(const std::vector<TrajectoryPoint>& points);
 
     /// @brief Search for k-nearest neighbors for the given query point.
     /// @param searchPoint the given query point

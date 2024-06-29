@@ -17,7 +17,7 @@ void FrenetSpace::initTree(const std::vector<TrajectoryPoint>& points) {
     initTree(cloud);
 }
 
-void FrenetSpace::Initialize(const pcl::PointCloud<TrajectoryPoint>::Ptr& cloud) {
+FrenetSpace::FrenetSpace(const pcl::PointCloud<TrajectoryPoint>::Ptr& cloud) {
     initTree(cloud);
 }
 
@@ -25,7 +25,7 @@ FrenetSpace::FrenetSpace(){ //we need to "fake initialize" the frenetSpace to av
     ;
 }
 
-void FrenetSpace::Initialize(const std::vector<TrajectoryPoint>& points) {
+FrenetSpace::FrenetSpace(const std::vector<TrajectoryPoint>& points) {
     initTree(points);
 }
 

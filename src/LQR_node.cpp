@@ -75,7 +75,7 @@ void LQRNode::trajectoryCallback(mmr_base::msg::SpeedProfilePoints::SharedPtr tr
     }
     cloud->width = cloud->points.size();
     cloud->height = 1;
-    this->frenetSpace.Initialize(cloud);
+    this->frenetSpace = FrenetSpace(cloud);
 	this->frenetSpaceIsInitialized = true;
 
 }
