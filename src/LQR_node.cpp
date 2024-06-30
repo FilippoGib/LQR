@@ -47,8 +47,8 @@ void LQRNode::odometryCallback(nav_msgs::msg::Odometry::SharedPtr odometry)
 	double roll, pitch;
 	tf2::Matrix3x3(quat).getRPY(roll, pitch, this->yaw);
 
-	this->odometryPoint.x_m = odometry->pose.pose.position.x;
-	this->odometryPoint.y_m = odometry->pose.pose.position.y;
+	this->odometryPoint.x= odometry->pose.pose.position.x;
+	this->odometryPoint.y= odometry->pose.pose.position.y;
 	this->odometryPoint.psi_rad = this->yaw;
 
 	FrenetPoint frenetOdometry; //our goal
@@ -67,8 +67,8 @@ void LQRNode::trajectoryCallback(mmr_base::msg::SpeedProfilePoints::SharedPtr tr
 
     for (const auto &point : trajectory->points) {
 		TrajectoryPoint p;
-		p.x_m = point.point.x;
-		p.y_m = point.point.y;
+		p.x= point.point.x;
+		p.y= point.point.y;
 		p.psi_rad = point.ackerman_point.steering_angle;
 
         cloud->points.push_back(p);

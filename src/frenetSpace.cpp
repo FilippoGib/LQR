@@ -48,8 +48,8 @@ int FrenetSpace::nearestNeighbour(const TrajectoryPoint& searchPoint,
     int number = kdtree.nearestKSearch(searchPoint, K, pointIdxKNNSearch, returnDistances);
     for (int i = 0; i < number; ++i) {
         if (verbose) {
-            std::cout << "INFO: Output KNN search (" << i << "): " << (*cloud)[pointIdxKNNSearch[i]].x_m
-                      << " " << (*cloud)[pointIdxKNNSearch[i]].y_m
+            std::cout << "INFO: Output KNN search (" << i << "): " << (*cloud)[pointIdxKNNSearch[i]].x
+                      << " " << (*cloud)[pointIdxKNNSearch[i]].y
                       << " (squared distance: " << returnDistances[i] << ")" << std::endl;
         }
         returnPoints.push_back((*cloud)[pointIdxKNNSearch[i]]);
