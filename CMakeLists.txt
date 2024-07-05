@@ -40,7 +40,7 @@ link_directories(${PCL_LIBRARY_DIRS})
 add_definitions(${PCL_DEFINITIONS})
 
 # Add executable
-add_executable(lqr_node src/LQR_node.cpp src/frenetSpace.cpp)
+add_executable(lqr_node src/lqr_node.cpp src/frenetSpace.cpp)
 
 # Link against PCL libraries and other dependencies
 target_link_libraries(lqr_node 
@@ -72,6 +72,14 @@ install(TARGETS
 
 install(DIRECTORY include/
   DESTINATION include/${PROJECT_NAME})
+
+install(DIRECTORY
+      config
+      DESTINATION share/${PROJECT_NAME}/)
+
+install(DIRECTORY
+	    launch
+	    DESTINATION share/${PROJECT_NAME}/)
 
 if(BUILD_TESTING)
 	find_package(ament_lint_auto REQUIRED)

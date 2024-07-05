@@ -1,4 +1,4 @@
-#include "lqr/LQR_node.hpp"
+#include "lqr/lqr_node.hpp"
 
 LQRNode::LQRNode() : Node("LQR")
 {
@@ -9,14 +9,14 @@ LQRNode::LQRNode() : Node("LQR")
 
 void LQRNode::loadParameters()
 {
-	this->declare_parameter<std::string>("node/topicOdometry", "");
-	this->param_topicOdometry = this->get_parameter("node/topicOdometry").get_value<std::string>();
+	this->declare_parameter<std::string>("topicOdometry", "");
+	this->param_topicOdometry = this->get_parameter("topicOdometry").get_value<std::string>();
 
-	this->declare_parameter<std::string>("node/topicTrajectory", "");
-	this->param_topicTrajectory = this->get_parameter("node/topicTrajectory").get_value<std::string>();
+	this->declare_parameter<std::string>("topicTrajectory", "");
+	this->param_topicTrajectory = this->get_parameter("topicTrajectory").get_value<std::string>();
 
-	this->declare_parameter<std::string>("node/topicControls", "");
-	this->param_topicControls = this->get_parameter("node/topicControls").get_value<std::string>();
+	this->declare_parameter<std::string>("topicControls", "");
+	this->param_topicControls = this->get_parameter("topicControls").get_value<std::string>();
 }
 
 void LQRNode::initialization()
