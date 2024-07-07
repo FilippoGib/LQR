@@ -9,14 +9,14 @@ LQRNode::LQRNode() : Node("LQR")
 
 void LQRNode::loadParameters()
 {
-	this->declare_parameter<std::string>("topicOdometry", "");
-	this->param_topicOdometry = this->get_parameter("topicOdometry").get_value<std::string>();
+	this->declare_parameter<std::string>("node/topicOdometry", "Odometry");
+	this->param_topicOdometry = this->get_parameter("node/topicOdometry").get_value<std::string>();
 
-	this->declare_parameter<std::string>("topicTrajectory", "");
-	this->param_topicTrajectory = this->get_parameter("topicTrajectory").get_value<std::string>();
+	this->declare_parameter<std::string>("node/topicTrajectory", "planning/speedProfilePoints");
+	this->param_topicTrajectory = this->get_parameter("node/topicTrajectory").get_value<std::string>();
 
-	this->declare_parameter<std::string>("topicControls", "");
-	this->param_topicControls = this->get_parameter("topicControls").get_value<std::string>();
+	this->declare_parameter<std::string>("node/topicControls", "controls/controls");
+	this->param_topicControls = this->get_parameter("node/topicControls").get_value<std::string>();
 }
 
 void LQRNode::initialization()
@@ -30,18 +30,26 @@ void LQRNode::initialization()
 	this->timer->cancel();
 }
 
+Eigen::Vector3d toEigen(const geometry_msgs::msg::Vector3& v) {
+    return Eigen::Vector3d(v.x, v.y, v.z);
+}
+
 //first we convert the Odometry into a TrajectoryPoint so that the kd-tree can work with homogeneous points
 void LQRNode::odometryCallback(nav_msgs::msg::Odometry::SharedPtr odometry)
 {
-	this->linearVelocity = odometry->twist.twist.linear;
-	this->linearSpeed = std::sqrt(this->linearVelocity.x * this->linearVelocity.x +
-									this->linearVelocity.y * this->linearVelocity.y +
-									this->linearVelocity.z * this->linearVelocity.z);
+	if(!this->frenetSpace.has_value())
+	{
+		return;
+	}
+
+	this->linearVelocity = toEigen(odometry->twist.twist.linear);
+
+	this->linearSpeed = this->linearVelocity.norm();
 
 	// Extract angular velocity
 	this->yawAngularVelocity = odometry->twist.twist.angular.z;
 
-	// Extract heading (yaw angle)
+	// Extract heading (yaw angFrenetSpacele)
 	tf2::Quaternion quat;
 	tf2::fromMsg(odometry->pose.pose.orientation, quat);
 	double roll, pitch;
@@ -53,16 +61,19 @@ void LQRNode::odometryCallback(nav_msgs::msg::Odometry::SharedPtr odometry)
 
 	FrenetPoint frenetOdometry; //our goal
 
-	if(this->frenetSpaceIsInitialized)
-	{
-		this->frenetSpace.getFrenetPoint(this->odometryPoint, frenetOdometry, this->yaw, this->linearVelocity,this->yawAngularVelocity); 
-	}
+	FrenetSpace& frenet_space = this->frenetSpace.value(); //modo per accedere al valore di un optional
 
+	int n = frenet_space.getFrenetPoint(this->odometryPoint, frenetOdometry, this->yaw, this->linearVelocity,this->yawAngularVelocity); 
+	
 	//TODO: matmul per ottenere l'output
 }
 
 void LQRNode::trajectoryCallback(mmr_base::msg::SpeedProfilePoints::SharedPtr trajectory)
 {
+	if(this->frenetSpace.has_value())
+	{
+		return;
+	}
      pcl::PointCloud<TrajectoryPoint>::Ptr cloud(new pcl::PointCloud<TrajectoryPoint>);
 
     for (const auto &point : trajectory->points) {
@@ -76,8 +87,7 @@ void LQRNode::trajectoryCallback(mmr_base::msg::SpeedProfilePoints::SharedPtr tr
     cloud->width = cloud->points.size();
     cloud->height = 1;
     this->frenetSpace = FrenetSpace(cloud);
-	this->frenetSpaceIsInitialized = true;
-
+	RCLCPP_INFO(this->get_logger(), "FrenetSpace successfully initialized.\n");
 }
 
 int main(int argc, char **argv)

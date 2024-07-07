@@ -1,5 +1,5 @@
 lqr_node:
-	ros__parameters:
-    	topicOdometry: "/Odometry"
-    	topicTrajectory: "/planning/speedProfilePoints"
-    	topicControls: "/controls/controls"
+  ros__parameters:
+    node/topicOdometry: "Odometry"
+    node/topicTrajectory: "planning/speedProfilePoints"
+    node/topicControls: "controls/controls"

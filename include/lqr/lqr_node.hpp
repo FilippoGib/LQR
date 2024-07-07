@@ -14,6 +14,7 @@
 #include "mmr_base/msg/speed_profile_points.hpp"
 #include <ackermann_msgs/msg/ackermann_drive.hpp>
 #include <cmath>
+#include <optional>
 
 using namespace std::chrono_literals;
 
@@ -39,12 +40,11 @@ class LQRNode : public rclcpp::Node
         std::string param_topicTrajectory; //topic we subscribe to, to get the odometry
 
         TrajectoryPoint odometryPoint; //odometry in a trajectoryPoint format so that the kd-tree works with homogeneous points
-        FrenetSpace frenetSpace;
-        geometry_msgs::msg::Vector3 linearVelocity;
+        std::optional<FrenetSpace> frenetSpace;
+        Eigen::Vector3d linearVelocity;
         double yawAngularVelocity;
         double linearSpeed;
         double yaw;
-        bool frenetSpaceIsInitialized = false;
 };
 
 #endif

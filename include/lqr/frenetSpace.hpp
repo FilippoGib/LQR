@@ -43,8 +43,6 @@ private:
     void initTree(const std::vector<TrajectoryPoint>& points);
 
 public:
-    ///@brief dummy constructor to avoid building issues
-    FrenetSpace();
 
     /// @brief Constructor
     /// @param cloud An already created point cloud
@@ -74,5 +72,5 @@ public:
     /// @param linearVelocity velocity of the car represented as a vector
     /// @param yawAngularVelocity angular velocity on the z axis (yaw') 
     /// @return 1 if found, 0 otherwise.
-    int getFrenetPoint(const TrajectoryPoint odometryPoint, FrenetPoint& frenetPoint, double odometryYaw, geometry_msgs::msg::Vector3 linearVelocity, double yawAngularVelocity);
+    int getFrenetPoint(const TrajectoryPoint odometryPoint, FrenetPoint& frenetPoint, double odometryYaw, Eigen::Vector3d linearVelocity, double yawAngularVelocity);
 };

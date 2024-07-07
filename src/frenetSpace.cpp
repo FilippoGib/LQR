@@ -21,10 +21,6 @@ FrenetSpace::FrenetSpace(const pcl::PointCloud<TrajectoryPoint>::Ptr& cloud) {
     initTree(cloud);
 }
 
-FrenetSpace::FrenetSpace(){ //we need to "fake initialize" the frenetSpace to avoid c++ errors
-    ;
-}
-
 FrenetSpace::FrenetSpace(const std::vector<TrajectoryPoint>& points) {
     initTree(points);
 }
@@ -57,32 +53,23 @@ int FrenetSpace::nearestNeighbour(const TrajectoryPoint& searchPoint,
     return number;
 }
 
-geometry_msgs::msg::Vector3 findPerpendicularUnitVector(double heading) {
-    geometry_msgs::msg::Vector3 perpendicularVersor;
-    perpendicularVersor.x = -sin(heading);
-    perpendicularVersor.y = cos(heading);
-    perpendicularVersor.z = 0.0; // Assuming heading is in the XY plane
+Eigen::Vector3d findPerpendicularUnitVector(double heading) {
+    // Compute the perpendicular vector
+    Eigen::Vector3d perpendicularVersor(-sin(heading), cos(heading), 0.0);
 
     // Normalize the vector to make it a unit vector
-    double magnitude = std::sqrt(perpendicularVersor.x * perpendicularVersor.x +
-                                 perpendicularVersor.y * perpendicularVersor.y +
-                                 perpendicularVersor.z * perpendicularVersor.z);
-    
-    perpendicularVersor.x /= magnitude;
-    perpendicularVersor.y /= magnitude;
-    perpendicularVersor.z /= magnitude;
-    
+    perpendicularVersor.normalize();
+
     return perpendicularVersor;
 }
 
-double findNormalComponent(const geometry_msgs::msg::Vector3 linearVelocity, double heading) {
+// Function to find the normal component of a linear velocity with respect to a heading
+double findNormalComponent(const Eigen::Vector3d& linearVelocity, double heading) {
     // Find the perpendicular unit vector to the heading direction
-    geometry_msgs::msg::Vector3 perpendicularUnitVector = findPerpendicularUnitVector(heading);
+    Eigen::Vector3d perpendicularUnitVector = findPerpendicularUnitVector(heading);
 
     // Compute the dot product of linear velocity and the perpendicular unit vector
-    double normalComponent = linearVelocity.x * perpendicularUnitVector.x +
-                             linearVelocity.y * perpendicularUnitVector.y +
-                             linearVelocity.z * perpendicularUnitVector.z;
+    double normalComponent = linearVelocity.dot(perpendicularUnitVector);
 
     return normalComponent;
 }
@@ -96,7 +83,7 @@ double normalizeAngle(double angle) {
     return angle - PI;
 }
 
-int FrenetSpace::getFrenetPoint(const TrajectoryPoint odometryPoint, FrenetPoint& frenetPoint, double odometryYaw, geometry_msgs::msg::Vector3 linearVelocity, double yawAngularVelocity) {
+int FrenetSpace::getFrenetPoint(const TrajectoryPoint odometryPoint, FrenetPoint& frenetPoint, double odometryYaw, Eigen::Vector3d linearVelocity, double yawAngularVelocity) {
 
     std::vector<TrajectoryPoint> pn;
     std::vector<float> pn_d;
@@ -104,7 +91,6 @@ int FrenetSpace::getFrenetPoint(const TrajectoryPoint odometryPoint, FrenetPoint
     int n = nearestNeighbour(odometryPoint, pn, pn_d, 1, false);
 
     if (n > 0) {
-
 
         //frenetPoint.s = pn[0].s_m;  // Assuming frenetPoint.s is computed this way, apparently we don't need it at this point
         frenetPoint.d = pn_d[0];
