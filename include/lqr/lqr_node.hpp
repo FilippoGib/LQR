@@ -45,6 +45,7 @@ class LQRNode : public rclcpp::Node
         double yawAngularVelocity;
         double linearSpeed;
         double yaw;
+        bool debugging = false;
 };
 
 #endif

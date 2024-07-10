@@ -41,6 +41,15 @@ void LQRNode::odometryCallback(nav_msgs::msg::Odometry::SharedPtr odometry)
 	{
 		return;
 	}
+	if(this->debugging)
+	{
+		return;
+	}
+
+	this->debugging = true;
+
+	RCLCPP_INFO(this->get_logger(), "Odometry received. \n");
+
 
 	this->linearVelocity = toEigen(odometry->twist.twist.linear);
 
@@ -59,12 +68,18 @@ void LQRNode::odometryCallback(nav_msgs::msg::Odometry::SharedPtr odometry)
 	this->odometryPoint.y= odometry->pose.pose.position.y;
 	this->odometryPoint.psi_rad = this->yaw;
 
+	RCLCPP_INFO(this->get_logger(), "Odometry point is: x = %f, y = %f, psi_rad = %f\n", this->odometryPoint.x, this->odometryPoint.y, this->odometryPoint.psi_rad);
+
+
 	FrenetPoint frenetOdometry; //our goal
 
 	FrenetSpace& frenet_space = this->frenetSpace.value(); //modo per accedere al valore di un optional
 
 	int n = frenet_space.getFrenetPoint(this->odometryPoint, frenetOdometry, this->yaw, this->linearVelocity,this->yawAngularVelocity); 
 	
+	RCLCPP_INFO(this->get_logger(), "FrenetPoint successfully returned: s = %f, d = %f, yaw_dev = %f, d_prime = %f, yaw_dev_prime = %f\n", frenetOdometry.s, frenetOdometry.d,frenetOdometry.yaw_dev,frenetOdometry.d_prime,frenetOdometry.yaw_dev_prime);
+
+
 	//TODO: matmul per ottenere l'output
 }
 
