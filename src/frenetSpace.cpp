@@ -2,8 +2,9 @@
 #include <cmath>
 
 void FrenetSpace::initTree(const pcl::PointCloud<TrajectoryPoint>::Ptr& cloud) {
-    kdtree.setInputCloud(cloud);
-    std::cout << "INFO: Frenet Space initialized\n";
+    kdtree.setInputCloud(cloud, NULL); //NULL means the whole cloud is used
+    std::cout << "INFO: Frenet Space initialized successfully\n";
+    std::cout << std::flush;
 }
 
 void FrenetSpace::initTree(const std::vector<TrajectoryPoint>& points) {
@@ -18,6 +19,8 @@ void FrenetSpace::initTree(const std::vector<TrajectoryPoint>& points) {
 }
 
 FrenetSpace::FrenetSpace(const pcl::PointCloud<TrajectoryPoint>::Ptr& cloud) {
+    std::cout << "initializing tree" << std::endl;
+    std::cout << std::flush;
     initTree(cloud);
 }
 
@@ -47,6 +50,7 @@ int FrenetSpace::nearestNeighbour(const TrajectoryPoint& searchPoint,
             std::cout << "INFO: Output KNN search (" << i << "): " << (*cloud)[pointIdxKNNSearch[i]].x
                       << " " << (*cloud)[pointIdxKNNSearch[i]].y
                       << " (squared distance: " << returnDistances[i] << ")" << std::endl;
+            std::cout << std::flush;
         }
         returnPoints.push_back((*cloud)[pointIdxKNNSearch[i]]);
     }
@@ -91,6 +95,7 @@ int FrenetSpace::getFrenetPoint(const TrajectoryPoint odometryPoint, FrenetPoint
             << ", y = " << pn[0].y 
             << ", psi_rad = " << pn[0].psi_rad 
             << "\nDistance = " << pn_d[0] << std::endl;
+            std::cout << std::flush;
 
         //frenetPoint.s = pn[0].s_m;  // Assuming frenetPoint.s is computed this way, apparently we don't need it at this point
         frenetPoint.d = pn_d[0];

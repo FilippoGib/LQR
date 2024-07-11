@@ -37,22 +37,23 @@ Eigen::Vector3d toEigen(const geometry_msgs::msg::Vector3& v) {
 //first we convert the Odometry into a TrajectoryPoint so that the kd-tree can work with homogeneous points
 void LQRNode::odometryCallback(nav_msgs::msg::Odometry::SharedPtr odometry)
 {
+	//RCLCPP_INFO(this->get_logger(), "Odometry callback entered\n");
+
 	if(!this->frenetSpace.has_value())
 		return;
+	
+	//RCLCPP_INFO(this->get_logger(), "frenetSpace has value\n");
 
 	if(this->debugging)
 		return;
 
-	if(this->debugging_counter < 500) //scarto le prime 500 odometrie così sono sicuro che la macchina non sia ferma
+	if(this->debugging_counter < 600) //scarto le prime tot odometrie così sono sicuro che la macchina non sia ferma
 	{
-		this->debugging_counter ++;
+		this->debugging_counter += 1;
 		return;
 	}
 
 	this->debugging = true;
-
-	RCLCPP_INFO(this->get_logger(), "Odometry received. \n");
-
 
 	this->linearVelocity = toEigen(odometry->twist.twist.linear);
 
@@ -71,19 +72,18 @@ void LQRNode::odometryCallback(nav_msgs::msg::Odometry::SharedPtr odometry)
 	this->odometryPoint.y= odometry->pose.pose.position.y;
 	this->odometryPoint.psi_rad = this->yaw;
 
-	RCLCPP_INFO(this->get_logger(), "Odometry point is: x = %f, y = %f, psi_rad = %f\n", this->odometryPoint.x, this->odometryPoint.y, this->odometryPoint.psi_rad);
+	RCLCPP_INFO(this->get_logger(), "Odometry point is: x = %f, y = %f, psi_rad = %f, angularVelocity = %f, speed = %f\n", this->odometryPoint.x, this->odometryPoint.y, this->odometryPoint.psi_rad, odometry->twist.twist.angular.z, this->linearSpeed);
 
 	FrenetPoint frenetOdometry; //our goal
 
 	FrenetSpace& frenet_space = this->frenetSpace.value(); //modo per accedere al valore di un optional
 
-	std::cout << "Calling getfrenetpoint" << std::endl;
+	RCLCPP_INFO(this->get_logger(), "Calling getFrenetPoint\n");
 
 	int n = frenet_space.getFrenetPoint(this->odometryPoint, frenetOdometry, this->yaw, this->linearVelocity,this->yawAngularVelocity); 
 
-	std::this_thread::sleep_for(std::chrono::seconds(1)); //to make sure getFrenetPoint has finished
-	
-	RCLCPP_INFO(this->get_logger(), "FrenetPoint successfully returned: s = %f, d = %f, yaw_dev = %f, d_prime = %f, yaw_dev_prime = %f\n", frenetOdometry.s, frenetOdometry.d,frenetOdometry.yaw_dev,frenetOdometry.d_prime,frenetOdometry.yaw_dev_prime);
+	if (n > 0)	
+		RCLCPP_INFO(this->get_logger(), "FrenetPoint successfully returned: s = %f, d = %f, yaw_dev = %f, d_prime = %f, yaw_dev_prime = %f\n", frenetOdometry.s, frenetOdometry.d,frenetOdometry.yaw_dev,frenetOdometry.d_prime,frenetOdometry.yaw_dev_prime);
 
 	//TODO: matmul per ottenere l'output
 }
@@ -106,8 +106,8 @@ void LQRNode::trajectoryCallback(mmr_base::msg::SpeedProfilePoints::SharedPtr tr
     }
     cloud->width = cloud->points.size();
     cloud->height = 1;
+	std::cout << "Calling frenetSpace constructor" <<std::endl;
     this->frenetSpace = FrenetSpace(cloud);
-	RCLCPP_INFO(this->get_logger(), "FrenetSpace successfully initialized.\n");
 }
 
 int main(int argc, char **argv)
