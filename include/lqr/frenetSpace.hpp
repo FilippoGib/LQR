@@ -1,6 +1,7 @@
 #pragma once
 
 #include <pcl/point_cloud.h>
+#include <rclcpp/rclcpp.hpp>
 #include <pcl/kdtree/kdtree_flann.h>
 #include "geometry_msgs/msg/vector3.hpp"
 #include "mmr_base/msg/speed_profile_point.hpp"

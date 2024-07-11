@@ -74,13 +74,8 @@ double findNormalComponent(const Eigen::Vector3d& linearVelocity, double heading
     return normalComponent;
 }
 
-double normalizeAngle(double angle) {
-    const double PI = 3.14159265358979323846;
-    angle = fmod(angle + PI, 2.0 * PI);
-    if (angle < 0) {
-        angle += 2.0 * PI;
-    }
-    return angle - PI;
+double normalize_angle(double theta) {
+    return std::fmod(theta + M_PI, 2 * M_PI) - M_PI;
 }
 
 int FrenetSpace::getFrenetPoint(const TrajectoryPoint odometryPoint, FrenetPoint& frenetPoint, double odometryYaw, Eigen::Vector3d linearVelocity, double yawAngularVelocity) {
@@ -92,10 +87,15 @@ int FrenetSpace::getFrenetPoint(const TrajectoryPoint odometryPoint, FrenetPoint
 
     if (n > 0) {
 
+         std::cout << "Nearest point found: x = " << pn[0].x 
+            << ", y = " << pn[0].y 
+            << ", psi_rad = " << pn[0].psi_rad 
+            << "\nDistance = " << pn_d[0] << std::endl;
+
         //frenetPoint.s = pn[0].s_m;  // Assuming frenetPoint.s is computed this way, apparently we don't need it at this point
         frenetPoint.d = pn_d[0];
         double deviationAngle = pn[0].psi_rad - odometryYaw;
-        deviationAngle = normalizeAngle(deviationAngle);
+        deviationAngle = normalize_angle(deviationAngle);
         frenetPoint.yaw_dev =  deviationAngle;
         frenetPoint.d_prime = findNormalComponent(linearVelocity, pn[0].psi_rad);
         frenetPoint.yaw_dev_prime = yawAngularVelocity;

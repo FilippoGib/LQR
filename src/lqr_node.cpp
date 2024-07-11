@@ -38,11 +38,14 @@ Eigen::Vector3d toEigen(const geometry_msgs::msg::Vector3& v) {
 void LQRNode::odometryCallback(nav_msgs::msg::Odometry::SharedPtr odometry)
 {
 	if(!this->frenetSpace.has_value())
-	{
 		return;
-	}
+
 	if(this->debugging)
+		return;
+
+	if(this->debugging_counter < 500) //scarto le prime 500 odometrie così sono sicuro che la macchina non sia ferma
 	{
+		this->debugging_counter ++;
 		return;
 	}
 
@@ -53,7 +56,7 @@ void LQRNode::odometryCallback(nav_msgs::msg::Odometry::SharedPtr odometry)
 
 	this->linearVelocity = toEigen(odometry->twist.twist.linear);
 
-	this->linearSpeed = this->linearVelocity.norm();
+	this->linearSpeed = this->linearVelocity.norm(); //ritorna la norma del vettore, non è che lo normalizza
 
 	// Extract angular velocity
 	this->yawAngularVelocity = odometry->twist.twist.angular.z;
@@ -70,15 +73,17 @@ void LQRNode::odometryCallback(nav_msgs::msg::Odometry::SharedPtr odometry)
 
 	RCLCPP_INFO(this->get_logger(), "Odometry point is: x = %f, y = %f, psi_rad = %f\n", this->odometryPoint.x, this->odometryPoint.y, this->odometryPoint.psi_rad);
 
-
 	FrenetPoint frenetOdometry; //our goal
 
 	FrenetSpace& frenet_space = this->frenetSpace.value(); //modo per accedere al valore di un optional
 
+	std::cout << "Calling getfrenetpoint" << std::endl;
+
 	int n = frenet_space.getFrenetPoint(this->odometryPoint, frenetOdometry, this->yaw, this->linearVelocity,this->yawAngularVelocity); 
+
+	std::this_thread::sleep_for(std::chrono::seconds(1)); //to make sure getFrenetPoint has finished
 	
 	RCLCPP_INFO(this->get_logger(), "FrenetPoint successfully returned: s = %f, d = %f, yaw_dev = %f, d_prime = %f, yaw_dev_prime = %f\n", frenetOdometry.s, frenetOdometry.d,frenetOdometry.yaw_dev,frenetOdometry.d_prime,frenetOdometry.yaw_dev_prime);
-
 
 	//TODO: matmul per ottenere l'output
 }
