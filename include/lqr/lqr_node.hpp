@@ -13,8 +13,18 @@
 #include "mmr_base/msg/speed_profile_point.hpp"
 #include "mmr_base/msg/speed_profile_points.hpp"
 #include <ackermann_msgs/msg/ackermann_drive.hpp>
+
+#include <sensor_msgs/msg/imu.hpp>
+
+#include <message_filters/subscriber.h>
+#include <message_filters/time_synchronizer.h>
+#include <message_filters/sync_policies/approximate_time.h>
+
 #include <cmath>
 #include <optional>
+
+using std::placeholders::_1;
+using std::placeholders::_2;
 
 using namespace std::chrono_literals;
 
@@ -24,7 +34,7 @@ class LQRNode : public rclcpp::Node
         LQRNode();
         void initialization();
         void loadParameters();
-        void odometryCallback(nav_msgs::msg::Odometry::SharedPtr odometry); 
+        void odometryCallback(nav_msgs::msg::Odometry::SharedPtr odometryFastLioOdom, sensor_msgs::msg::Imu::SharedPtr imuData); 
         void trajectoryCallback(mmr_base::msg::SpeedProfilePoints::SharedPtr trajectory);
 
     private:
@@ -32,7 +42,12 @@ class LQRNode : public rclcpp::Node
         rclcpp::TimerBase::SharedPtr timer;
 
         rclcpp::Publisher<ackermann_msgs::msg::AckermannDrive>::SharedPtr controlsPub;
-        rclcpp::Subscription<nav_msgs::msg::Odometry>::SharedPtr odometrySub;
+        std::shared_ptr<message_filters::TimeSynchronizer<nav_msgs::msg::Odometry, sensor_msgs::msg::Imu>> odom_sync; //sincronizza la odometria di fastlio e quella di imu data
+
+        //rclcpp::Subscription<nav_msgs::msg::Odometry>::SharedPtr odometrySub; //using message filtering for debugging purposes
+        message_filters::Subscriber<nav_msgs::msg::Odometry> odometryFastLioOdomSub;
+        message_filters::Subscriber<sensor_msgs::msg::Imu> imuDataSub;
+
         rclcpp::Subscription<mmr_base::msg::SpeedProfilePoints>::SharedPtr trajectorySub;
 
         std::string param_topicControls;
@@ -46,7 +61,7 @@ class LQRNode : public rclcpp::Node
         double linearSpeed;
         double yaw;
         bool debugging = false;
-        int debugging_counter = 0;
+        int debugging_counter = 1000;
 };
 
 #endif

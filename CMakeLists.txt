@@ -27,6 +27,8 @@ find_package(tf2_geometry_msgs REQUIRED)
 find_package(PCL 1.13 REQUIRED)
 find_package(sensor_msgs REQUIRED)
 find_package(Eigen3 REQUIRED)
+find_package(message_filters REQUIRED)
+
 
 # Include directories
 include_directories(${PCL_INCLUDE_DIRS}
@@ -64,6 +66,7 @@ ament_target_dependencies(lqr_node
   Eigen3
   sensor_msgs
   rclcpp_components
+  message_filters
 )
 
 install(TARGETS

@@ -85,20 +85,22 @@ double normalize_angle(double theta) {
 int FrenetSpace::getFrenetPoint(const TrajectoryPoint odometryPoint, FrenetPoint& frenetPoint, double odometryYaw, Eigen::Vector3d linearVelocity, double yawAngularVelocity) {
 
     std::vector<TrajectoryPoint> pn;
-    std::vector<float> pn_d;
+    std::vector<float> pn_d; //non la usiamo in realtà
 
     int n = nearestNeighbour(odometryPoint, pn, pn_d, 1, false);
 
     if (n > 0) {
 
+        double distance = std::sqrt((odometryPoint.x - pn[0].x)*(odometryPoint.x - pn[0].x)+(odometryPoint.y - pn[0].y)*(odometryPoint.y - pn[0].y));
+
          std::cout << "Nearest point found: x = " << pn[0].x 
             << ", y = " << pn[0].y 
             << ", psi_rad = " << pn[0].psi_rad 
-            << "\nDistance = " << pn_d[0] << std::endl;
+            << "\nDistance = " << distance << std::endl;
             std::cout << std::flush;
 
         //frenetPoint.s = pn[0].s_m;  // Assuming frenetPoint.s is computed this way, apparently we don't need it at this point
-        frenetPoint.d = pn_d[0];
+        frenetPoint.d = distance;
         double deviationAngle = pn[0].psi_rad - odometryYaw;
         deviationAngle = normalize_angle(deviationAngle);
         frenetPoint.yaw_dev =  deviationAngle;

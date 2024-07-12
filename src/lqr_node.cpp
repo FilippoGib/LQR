@@ -9,14 +9,14 @@ LQRNode::LQRNode() : Node("LQR")
 
 void LQRNode::loadParameters()
 {
-	this->declare_parameter<std::string>("node/topicOdometry", "Odometry");
-	this->param_topicOdometry = this->get_parameter("node/topicOdometry").get_value<std::string>();
+	// this->declare_parameter<std::string>("topicOdometry", "Odometry");
+	// this->param_topicOdometry = this->get_parameter("topicOdometry").get_value<std::string>();
 
-	this->declare_parameter<std::string>("node/topicTrajectory", "planning/speedProfilePoints");
-	this->param_topicTrajectory = this->get_parameter("node/topicTrajectory").get_value<std::string>();
+	this->declare_parameter<std::string>("topicTrajectory", "planning/speedProfilePoints");
+	this->param_topicTrajectory = this->get_parameter("topicTrajectory").get_value<std::string>();
 
-	this->declare_parameter<std::string>("node/topicControls", "controls/controls");
-	this->param_topicControls = this->get_parameter("node/topicControls").get_value<std::string>();
+	this->declare_parameter<std::string>("topicControls", "controls/controls");
+	this->param_topicControls = this->get_parameter("topicControls").get_value<std::string>();
 }
 
 void LQRNode::initialization()
@@ -24,7 +24,13 @@ void LQRNode::initialization()
 	this->loadParameters();
 
 	this->controlsPub = this->create_publisher<ackermann_msgs::msg::AckermannDrive>(this->param_topicControls, 1);
-	this->odometrySub = this->create_subscription<nav_msgs::msg::Odometry>(this->param_topicOdometry, 1, std::bind(&LQRNode::odometryCallback, this, std::placeholders::_1));
+	//this->odometrySub = this->create_subscription<nav_msgs::msg::Odometry>(this->param_topicOdometry, 1, std::bind(&LQRNode::odometryCallback, this, std::placeholders::_1));
+
+	this->odometryFastLioOdomSub.subscribe(this, "/Odometry/fastLioOdom");
+	this->imuDataSub.subscribe(this, "/imu/data");
+	this->odom_sync = std::make_shared<message_filters::TimeSynchronizer<nav_msgs::msg::Odometry, sensor_msgs::msg::Imu>>(odometryFastLioOdomSub, imuDataSub, 10);
+  	this->odom_sync->registerCallback(std::bind(&LQRNode::odometryCallback, this, _1, _2));
+
 	this->trajectorySub = this->create_subscription<mmr_base::msg::SpeedProfilePoints>(this->param_topicTrajectory, 1, std::bind(&LQRNode::trajectoryCallback, this, std::placeholders::_1));
 
 	this->timer->cancel();
@@ -35,7 +41,7 @@ Eigen::Vector3d toEigen(const geometry_msgs::msg::Vector3& v) {
 }
 
 //first we convert the Odometry into a TrajectoryPoint so that the kd-tree can work with homogeneous points
-void LQRNode::odometryCallback(nav_msgs::msg::Odometry::SharedPtr odometry)
+void LQRNode::odometryCallback(nav_msgs::msg::Odometry::SharedPtr odometryFastLioOdom, sensor_msgs::msg::Imu::SharedPtr imuData)
 {
 	//RCLCPP_INFO(this->get_logger(), "Odometry callback entered\n");
 
@@ -47,7 +53,7 @@ void LQRNode::odometryCallback(nav_msgs::msg::Odometry::SharedPtr odometry)
 	if(this->debugging)
 		return;
 
-	if(this->debugging_counter < 600) //scarto le prime tot odometrie così sono sicuro che la macchina non sia ferma
+	if(this->debugging_counter < 700) //scarto le prime tot odometrie così sono sicuro che la macchina non sia ferma
 	{
 		this->debugging_counter += 1;
 		return;
@@ -55,24 +61,24 @@ void LQRNode::odometryCallback(nav_msgs::msg::Odometry::SharedPtr odometry)
 
 	this->debugging = true;
 
-	this->linearVelocity = toEigen(odometry->twist.twist.linear);
+	this->linearVelocity = toEigen(odometryFastLioOdom->twist.twist.linear); //il vettore velocità lineare lo estraiamo dalla odometria di fastlio
 
 	this->linearSpeed = this->linearVelocity.norm(); //ritorna la norma del vettore, non è che lo normalizza
 
 	// Extract angular velocity
-	this->yawAngularVelocity = odometry->twist.twist.angular.z;
+	this->yawAngularVelocity = imuData.angular_velocity.z; //la velocità angolare la estraiamo da imudata
 
-	// Extract heading (yaw angFrenetSpacele)
+	//l'heading lo estraiamo da fastLios
 	tf2::Quaternion quat;
-	tf2::fromMsg(odometry->pose.pose.orientation, quat);
+	tf2::fromMsg(odometryFastLioOdom->pose.pose.orientation, quat);
 	double roll, pitch;
 	tf2::Matrix3x3(quat).getRPY(roll, pitch, this->yaw);
 
-	this->odometryPoint.x= odometry->pose.pose.position.x;
-	this->odometryPoint.y= odometry->pose.pose.position.y;
+	this->odometryPoint.x= odometryFastLioOdom->pose.pose.position.x;
+	this->odometryPoint.y= odometryFastLioOdom->pose.pose.position.y;
 	this->odometryPoint.psi_rad = this->yaw;
 
-	RCLCPP_INFO(this->get_logger(), "Odometry point is: x = %f, y = %f, psi_rad = %f, angularVelocity = %f, speed = %f\n", this->odometryPoint.x, this->odometryPoint.y, this->odometryPoint.psi_rad, odometry->twist.twist.angular.z, this->linearSpeed);
+	RCLCPP_INFO(this->get_logger(), "Odometry point is: x = %f, y = %f, psi_rad = %f, yawAngularVelocity = %f, speed = %f\n", this->odometryPoint.x, this->odometryPoint.y, this->odometryPoint.psi_rad, imuData.angular_velocity.z, this->linearSpeed);
 
 	FrenetPoint frenetOdometry; //our goal
 

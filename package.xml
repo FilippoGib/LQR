@@ -17,7 +17,9 @@
   <depend>tf2_geometry_msgs</depend>
   <depend>pcl_conversions</depend> <!-- PCL dependencies are often handled via pcl_conversions -->
   <depend>pcl_msgs</depend>        <!-- Another PCL related package often used -->
-  
+  <depend>sensor_msgs</depend>
+  <depend>message_filters</depend>
+
   <export>
     <build_type>ament_cmake</build_type>
   </export>
