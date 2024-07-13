@@ -15,7 +15,6 @@
 #include <ackermann_msgs/msg/ackermann_drive.hpp>
 
 #include <sensor_msgs/msg/imu.hpp>
-
 #include <message_filters/subscriber.h>
 #include <message_filters/time_synchronizer.h>
 #include <message_filters/sync_policies/approximate_time.h>
@@ -25,7 +24,6 @@
 
 using std::placeholders::_1;
 using std::placeholders::_2;
-
 using namespace std::chrono_literals;
 
 class LQRNode : public rclcpp::Node 
@@ -40,21 +38,21 @@ class LQRNode : public rclcpp::Node
     private:
 
         rclcpp::TimerBase::SharedPtr timer;
-
         rclcpp::Publisher<ackermann_msgs::msg::AckermannDrive>::SharedPtr controlsPub;
-        
-        //rclcpp::Subscription<nav_msgs::msg::Odometry>::SharedPtr odometrySub; //using message filtering for debugging purposes
+
         message_filters::Subscriber<nav_msgs::msg::Odometry> odometryFastLioOdomSub;
         message_filters::Subscriber<sensor_msgs::msg::Imu> imuDataSub;
-        std::shared_ptr<message_filters::TimeSynchronizer<nav_msgs::msg::Odometry, sensor_msgs::msg::Imu>> odom_sync; //sincronizza la odometria di fastlio e quella di imu data
+        
+        typedef message_filters::sync_policies::ApproximateTime<nav_msgs::msg::Odometry, sensor_msgs::msg::Imu> ApproxSyncPolicy;
+        std::shared_ptr<message_filters::Synchronizer<ApproxSyncPolicy>> odom_sync;
 
         rclcpp::Subscription<mmr_base::msg::SpeedProfilePoints>::SharedPtr trajectorySub;
 
         std::string param_topicControls;
-        std::string param_topicOdometry; //topic we subscribe to, to get the odometry
-        std::string param_topicTrajectory; //topic we subscribe to, to get the odometry
+        std::string param_topicOdometry; 
+        std::string param_topicTrajectory; 
 
-        TrajectoryPoint odometryPoint; //odometry in a trajectoryPoint format so that the kd-tree works with homogeneous points
+        TrajectoryPoint odometryPoint;
         std::optional<FrenetSpace> frenetSpace;
         Eigen::Vector3d linearVelocity;
         double yawAngularVelocity;

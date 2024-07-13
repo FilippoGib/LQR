@@ -26,10 +26,21 @@ void LQRNode::initialization()
 	this->controlsPub = this->create_publisher<ackermann_msgs::msg::AckermannDrive>(this->param_topicControls, 1);
 	//this->odometrySub = this->create_subscription<nav_msgs::msg::Odometry>(this->param_topicOdometry, 1, std::bind(&LQRNode::odometryCallback, this, std::placeholders::_1));
 
-	this->odometryFastLioOdomSub.subscribe(this, "/Odometry/fastLioOdom");
+	this->odometryFastLioOdomSub.subscribe(this, "/Odometry/fastLioOdom", rmw_qos_profile_sensor_data);
 	this->imuDataSub.subscribe(this, "/imu/data");
-	this->odom_sync = std::make_shared<message_filters::TimeSynchronizer<nav_msgs::msg::Odometry, sensor_msgs::msg::Imu>>(odometryFastLioOdomSub, imuDataSub, 10);
-  	this->odom_sync->registerCallback(std::bind(&LQRNode::odometryCallback, this, std::placeholders::_1, std::placeholders::_2));
+
+	// this->odom_sync = std::make_shared<message_filters::TimeSynchronizer<nav_msgs::msg::Odometry, sensor_msgs::msg::Imu>>(odometryFastLioOdomSub, imuDataSub, 10);
+  	// this->odom_sync->registerCallback(std::bind(&LQRNode::odometryCallback, this, std::placeholders::_1, std::placeholders::_2));
+
+	this->odom_sync = std::make_shared<message_filters::Synchronizer<ApproxSyncPolicy>>(ApproxSyncPolicy(10), odometryFastLioOdomSub, imuDataSub);
+
+    // Optionally, set the maximum allowed time difference between synchronized messages
+    this->odom_sync->setMaxIntervalDuration(rclcpp::Duration::from_seconds(1)); // 0.1 seconds tolerance
+
+    // Register the callback
+    this->odom_sync->registerCallback(std::bind(&LQRNode::odometryCallback, this, std::placeholders::_1, std::placeholders::_2));
+
+    // Other initializations
 
 	this->trajectorySub = this->create_subscription<mmr_base::msg::SpeedProfilePoints>(this->param_topicTrajectory, 1, std::bind(&LQRNode::trajectoryCallback, this, std::placeholders::_1));
 
