@@ -64,6 +64,7 @@ ament_target_dependencies(lqr_node
   Eigen3
   sensor_msgs
   rclcpp_components
+  rmw
 )
 
 install(TARGETS

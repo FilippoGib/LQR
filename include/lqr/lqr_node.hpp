@@ -46,7 +46,7 @@ class LQRNode : public rclcpp::Node
         double linearSpeed;
         double yaw;
         bool debugging = false;
-        int debugging_counter = 0;
+        int debugging_counter = 1000;
 };
 
 #endif

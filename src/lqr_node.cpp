@@ -23,8 +23,11 @@ void LQRNode::initialization()
 {
 	this->loadParameters();
 
+	auto qos = rclcpp::QoS(rclcpp::QoSInitialization::from_rmw(rmw_qos_profile_sensor_data));
+	qos.best_effort();
+
 	this->controlsPub = this->create_publisher<ackermann_msgs::msg::AckermannDrive>(this->param_topicControls, 1);
-	this->odometrySub = this->create_subscription<nav_msgs::msg::Odometry>(this->param_topicOdometry, 1, std::bind(&LQRNode::odometryCallback, this, std::placeholders::_1));
+	this->odometrySub = this->create_subscription<nav_msgs::msg::Odometry>(this->param_topicOdometry, qos, std::bind(&LQRNode::odometryCallback, this, std::placeholders::_1));
 	this->trajectorySub = this->create_subscription<mmr_base::msg::SpeedProfilePoints>(this->param_topicTrajectory, 1, std::bind(&LQRNode::trajectoryCallback, this, std::placeholders::_1));
 
 	this->timer->cancel();
@@ -52,6 +55,8 @@ void LQRNode::odometryCallback(nav_msgs::msg::Odometry::SharedPtr odometry)
 		this->debugging_counter += 1;
 		return;
 	}
+	
+	RCLCPP_INFO(this->get_logger(), "Odometry callback entered\n");
 
 	this->debugging = true;
 
