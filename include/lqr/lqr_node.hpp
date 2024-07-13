@@ -34,7 +34,7 @@ class LQRNode : public rclcpp::Node
         LQRNode();
         void initialization();
         void loadParameters();
-        void odometryCallback(nav_msgs::msg::Odometry::SharedPtr odometryFastLioOdom, sensor_msgs::msg::Imu::SharedPtr imuData); 
+        void odometryCallback(const nav_msgs::msg::Odometry::ConstSharedPtr& odometryFastLioOdom, const sensor_msgs::msg::Imu::ConstSharedPtr& imuData); 
         void trajectoryCallback(mmr_base::msg::SpeedProfilePoints::SharedPtr trajectory);
 
     private:
@@ -42,11 +42,11 @@ class LQRNode : public rclcpp::Node
         rclcpp::TimerBase::SharedPtr timer;
 
         rclcpp::Publisher<ackermann_msgs::msg::AckermannDrive>::SharedPtr controlsPub;
-        std::shared_ptr<message_filters::TimeSynchronizer<nav_msgs::msg::Odometry, sensor_msgs::msg::Imu>> odom_sync; //sincronizza la odometria di fastlio e quella di imu data
-
+        
         //rclcpp::Subscription<nav_msgs::msg::Odometry>::SharedPtr odometrySub; //using message filtering for debugging purposes
         message_filters::Subscriber<nav_msgs::msg::Odometry> odometryFastLioOdomSub;
         message_filters::Subscriber<sensor_msgs::msg::Imu> imuDataSub;
+        std::shared_ptr<message_filters::TimeSynchronizer<nav_msgs::msg::Odometry, sensor_msgs::msg::Imu>> odom_sync; //sincronizza la odometria di fastlio e quella di imu data
 
         rclcpp::Subscription<mmr_base::msg::SpeedProfilePoints>::SharedPtr trajectorySub;
 

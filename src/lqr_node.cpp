@@ -29,7 +29,7 @@ void LQRNode::initialization()
 	this->odometryFastLioOdomSub.subscribe(this, "/Odometry/fastLioOdom");
 	this->imuDataSub.subscribe(this, "/imu/data");
 	this->odom_sync = std::make_shared<message_filters::TimeSynchronizer<nav_msgs::msg::Odometry, sensor_msgs::msg::Imu>>(odometryFastLioOdomSub, imuDataSub, 10);
-  	this->odom_sync->registerCallback(std::bind(&LQRNode::odometryCallback, this, _1, _2));
+  	this->odom_sync->registerCallback(std::bind(&LQRNode::odometryCallback, this, std::placeholders::_1, std::placeholders::_2));
 
 	this->trajectorySub = this->create_subscription<mmr_base::msg::SpeedProfilePoints>(this->param_topicTrajectory, 1, std::bind(&LQRNode::trajectoryCallback, this, std::placeholders::_1));
 
@@ -41,9 +41,9 @@ Eigen::Vector3d toEigen(const geometry_msgs::msg::Vector3& v) {
 }
 
 //first we convert the Odometry into a TrajectoryPoint so that the kd-tree can work with homogeneous points
-void LQRNode::odometryCallback(nav_msgs::msg::Odometry::SharedPtr odometryFastLioOdom, sensor_msgs::msg::Imu::SharedPtr imuData)
+void LQRNode::odometryCallback(const nav_msgs::msg::Odometry::ConstSharedPtr& odometryFastLioOdom, const sensor_msgs::msg::Imu::ConstSharedPtr& imuData)
 {
-	//RCLCPP_INFO(this->get_logger(), "Odometry callback entered\n");
+	RCLCPP_INFO(this->get_logger(), "Odometry callback entered\n");
 
 	if(!this->frenetSpace.has_value())
 		return;
@@ -66,7 +66,7 @@ void LQRNode::odometryCallback(nav_msgs::msg::Odometry::SharedPtr odometryFastLi
 	this->linearSpeed = this->linearVelocity.norm(); //ritorna la norma del vettore, non è che lo normalizza
 
 	// Extract angular velocity
-	this->yawAngularVelocity = imuData.angular_velocity.z; //la velocità angolare la estraiamo da imudata
+	this->yawAngularVelocity = imuData->angular_velocity.z; //la velocità angolare la estraiamo da imudata
 
 	//l'heading lo estraiamo da fastLios
 	tf2::Quaternion quat;
@@ -78,7 +78,7 @@ void LQRNode::odometryCallback(nav_msgs::msg::Odometry::SharedPtr odometryFastLi
 	this->odometryPoint.y= odometryFastLioOdom->pose.pose.position.y;
 	this->odometryPoint.psi_rad = this->yaw;
 
-	RCLCPP_INFO(this->get_logger(), "Odometry point is: x = %f, y = %f, psi_rad = %f, yawAngularVelocity = %f, speed = %f\n", this->odometryPoint.x, this->odometryPoint.y, this->odometryPoint.psi_rad, imuData.angular_velocity.z, this->linearSpeed);
+	RCLCPP_INFO(this->get_logger(), "Odometry point is: x = %f, y = %f, psi_rad = %f, yawAngularVelocity = %f, speed = %f\n", this->odometryPoint.x, this->odometryPoint.y, this->odometryPoint.psi_rad, imuData->angular_velocity.z, this->linearSpeed);
 
 	FrenetPoint frenetOdometry; //our goal
 
